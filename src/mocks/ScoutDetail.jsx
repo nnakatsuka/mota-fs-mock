@@ -16,7 +16,7 @@ const TEXT = "#0A2540";
 const TEXT_SUB = "#5A6B7C";
 const TEXT_MUTE = "#A0AEC0";
 
-const MESSAGE_PREVIEW_LIMIT = 100;
+const MESSAGE_PREVIEW_LIMIT = 50;
 
 const JOB_OVERVIEW = `MOTAは「世界中にもっとフェアトレードを」をミッションに、人生の選択をより公正で公平な機会に変革するプロダクトを提供しております。
 
