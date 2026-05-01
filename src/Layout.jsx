@@ -18,6 +18,8 @@ const MOCKS = [
   { path: "/scout-list",         label: "D-1 スカウト一覧",     sub: "ログイン後・タブ切替" },
   { path: "/scout-detail",       label: "D-2 スカウト詳細",     sub: "メッセージ・追従ボタン" },
   { path: "/applied-complete",   label: "D-3 応募完了",        sub: "応募後の案内画面" },
+  { path: "/applied-list",       label: "D-4 応募一覧",        sub: "応募タブ" },
+  { path: "/job-detail",         label: "D-5 求人詳細",        sub: "PRポイント・社員の声" },
 ];
 
 export default function Layout() {

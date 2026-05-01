@@ -1,5 +1,7 @@
 // ==========================================================================
 // Scout (スカウト) のダミーデータ
+// status        : スカウト一覧でのステータス  "scout" | "hold" | "decline"
+// appStatus     : 応募一覧でのステータス     "applied" | "hired" | "rejected"
 // ==========================================================================
 
 export const SCOUTS = [
@@ -15,7 +17,8 @@ export const SCOUTS = [
     icon: "🏗",
     iconBg: "#E0EBF7",
     iconColor: "#3565AB",
-    status: "scout", // "scout" | "hold" | "decline"
+    status: "scout",
+    appStatus: "applied",
     isNew: true,
     receivedAt: "2025-04-30",
     message: "佐藤さんの情報を拝見し、ぜひ当社へ面接にお越しいただきたくご連絡しました。質問などもお気軽にどうぞ。前職での経験を活かしていただけるポジションです。",
@@ -28,6 +31,16 @@ export const SCOUTS = [
       others: "インセンティブあり、夜勤の研修制度、特別休暇14日あり、手当も充実",
     },
     photos: ["🏗", "🏢", "👷‍♂️", "📐", "🚧", "🔧"],
+    prPoints: [
+      "未経験から成長できる充実の研修制度",
+      "全国展開だから希望勤務地で働ける",
+      "残業少なめでプライベートも両立",
+    ],
+    voiceFromEmployee: {
+      name: "Tさん（28歳・男性）",
+      role: "施工管理 / 入社2年目",
+      content: "前職は飲食業でしたが、未経験から入社して2年で現場を任せてもらえるようになりました。先輩方が丁寧に教えてくださるので、安心して成長できる環境です。",
+    },
   },
   {
     id: "scout_002",
@@ -42,6 +55,7 @@ export const SCOUTS = [
     iconBg: "#E8F4D9",
     iconColor: "#5A8B2D",
     status: "scout",
+    appStatus: "applied",
     isNew: true,
     receivedAt: "2025-04-29",
     message: "未経験から始められる方を募集しています。当院は研修制度が充実しており、長く働けるアットホームな職場です。ぜひ面接にお越しください。",
@@ -54,6 +68,16 @@ export const SCOUTS = [
       others: "交通費全額支給、社保完備、昇給年1回",
     },
     photos: ["🦷", "🏥", "👩‍⚕️", "💉", "📋", "🧑‍🦰"],
+    prPoints: [
+      "土日も休みでプライベートを確保",
+      "充実の研修で未経験から正社員へ",
+      "アットホームな雰囲気で長く働ける",
+    ],
+    voiceFromEmployee: {
+      name: "Mさん（26歳・女性）",
+      role: "歯科助手 / 入社3年目",
+      content: "院長やスタッフの皆さんが優しくて、初日から働きやすかったです。患者さんに『ありがとう』と言ってもらえると本当にやりがいを感じます。",
+    },
   },
   {
     id: "scout_003",
@@ -68,6 +92,7 @@ export const SCOUTS = [
     iconBg: "#FEF3D6",
     iconColor: "#B5832A",
     status: "scout",
+    appStatus: "hired",
     isNew: false,
     receivedAt: "2025-04-25",
     message: "当社では普通自動車免許をお持ちの方を積極採用中です。安定した収入と充実した福利厚生をご用意しています。面接にお越しください。",
@@ -80,6 +105,16 @@ export const SCOUTS = [
       others: "資格取得支援あり、寮・社宅制度あり",
     },
     photos: ["🚚", "📦", "🛣", "👷", "🏬", "🚛"],
+    prPoints: [
+      "資格手当・各種手当で安定した収入",
+      "資格取得支援で次のキャリアへ",
+      "寮・社宅完備で住居の心配なし",
+    ],
+    voiceFromEmployee: {
+      name: "Kさん（32歳・男性）",
+      role: "配送スタッフ / 入社5年目",
+      content: "未経験で入社しましたが、運転も丁寧に教えてもらえました。手当も充実していて、家族を養うにも安心できる職場です。",
+    },
   },
   {
     id: "scout_004",
@@ -94,6 +129,7 @@ export const SCOUTS = [
     iconBg: "#FDE6F0",
     iconColor: "#B53A78",
     status: "hold",
+    appStatus: "applied",
     isNew: false,
     receivedAt: "2025-04-20",
     message: "明るい接客が得意な方を募集しています。社割でブランド商品を購入できる嬉しい特典あり。ぜひ一度お話を聞かせてください。",
@@ -106,6 +142,16 @@ export const SCOUTS = [
       others: "社員割引50%、研修制度あり",
     },
     photos: ["👔", "👗", "🛍", "💄", "🪞", "🏬"],
+    prPoints: [
+      "社割50%でお得にお買い物",
+      "髪型・ネイル自由で自分らしく働ける",
+      "ブランクOKで復職もしやすい",
+    ],
+    voiceFromEmployee: {
+      name: "Yさん（24歳・女性）",
+      role: "販売スタッフ / 入社2年目",
+      content: "ファッションが好きで入社しました。社割で好きなブランドを楽しみつつ、お客様に喜んでもらえる仕事は本当に楽しいです。",
+    },
   },
   {
     id: "scout_005",
@@ -120,6 +166,7 @@ export const SCOUTS = [
     iconBg: "#E0F2F8",
     iconColor: "#1D7AAB",
     status: "scout",
+    appStatus: "applied",
     isNew: true,
     receivedAt: "2025-04-30",
     message: "車が好きな方歓迎！未経験から始められ、頑張り次第で年収500万も可能です。インセンティブ制度が充実しています。",
@@ -132,6 +179,16 @@ export const SCOUTS = [
       others: "社用車貸与、資格取得支援、研修制度充実",
     },
     photos: ["🚗", "🔑", "💼", "🚘", "📊", "🏢"],
+    prPoints: [
+      "頑張り次第で年収500万円も可能",
+      "車好きが集まる活気ある職場",
+      "未経験から始められる手厚い研修",
+    ],
+    voiceFromEmployee: {
+      name: "Sさん（29歳・男性）",
+      role: "買取査定スタッフ / 入社3年目",
+      content: "もともと車が好きで未経験から入社しました。査定スキルが身につくと年収も上がっていき、3年目で500万を超えました。",
+    },
   },
   {
     id: "scout_006",
@@ -146,6 +203,7 @@ export const SCOUTS = [
     iconBg: "#F0E8FA",
     iconColor: "#6B4DAA",
     status: "decline",
+    appStatus: "rejected",
     isNew: false,
     receivedAt: "2025-04-18",
     message: "未経験から介護のプロを目指せる環境です。資格取得支援制度あり、夜勤手当も充実しています。ぜひお話させてください。",
@@ -158,5 +216,15 @@ export const SCOUTS = [
       others: "資格取得支援、社員寮あり、賞与年2回",
     },
     photos: ["🧑‍🦳", "🏥", "👨‍⚕️", "🌷", "🏠", "🧑‍🤝‍🧑"],
+    prPoints: [
+      "資格取得支援で介護のプロへ成長",
+      "夜勤手当で月収アップ",
+      "ご利用者様との温かい時間",
+    ],
+    voiceFromEmployee: {
+      name: "Aさん（31歳・女性）",
+      role: "介護スタッフ / 入社4年目",
+      content: "未経験で不安でしたが、資格取得もサポートしてもらい、介護福祉士になれました。ご利用者様の笑顔が何よりやりがいです。",
+    },
   },
 ];

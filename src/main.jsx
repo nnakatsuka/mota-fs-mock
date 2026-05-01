@@ -10,6 +10,8 @@ import RegisterStep4 from "./mocks/RegisterStep4.jsx";
 import RegisterComplete from "./mocks/RegisterComplete.jsx";
 import ScoutList from "./mocks/ScoutList.jsx";
 import ScoutDetail from "./mocks/ScoutDetail.jsx";
+import AppliedList from "./mocks/AppliedList.jsx";
+import JobDetail from "./mocks/JobDetail.jsx";
 import AppliedComplete from "./mocks/AppliedComplete.jsx";
 import "./index.css";
 
@@ -27,6 +29,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="/scout-list" element={<ScoutList />} />
           <Route path="/scout-detail/:id" element={<ScoutDetail />} />
           <Route path="/scout-detail" element={<ScoutDetail />} />
+          <Route path="/applied-list" element={<AppliedList />} />
+          <Route path="/job-detail/:id" element={<JobDetail />} />
+          <Route path="/job-detail" element={<JobDetail />} />
           <Route path="/applied-complete" element={<AppliedComplete />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
