@@ -200,9 +200,9 @@ function BottomNav({ activeTab = "scout" }) {
     { id: "search", icon: "🔍", label: "求人検索" },
     { id: "scout", icon: "📩", label: "スカウト" },
     { id: "applied", icon: "📝", label: "応募" },
-    { id: "fav", icon: "❤️", label: "気になる" },
-    { id: "msg", icon: "💬", label: "メッセージ" },
+    { id: "mypage", icon: "👤", label: "マイページ" },
   ];
+  
   return (
     <div style={{
       borderTop: `1px solid ${BORDER}`,
