@@ -8,9 +8,9 @@ import RegisterStep2 from "./mocks/RegisterStep2.jsx";
 import RegisterStep3 from "./mocks/RegisterStep3.jsx";
 import RegisterStep4 from "./mocks/RegisterStep4.jsx";
 import RegisterComplete from "./mocks/RegisterComplete.jsx";
-import CSFlow from "./mocks/CSFlow.jsx";
-import JobseekerSwipe from "./mocks/JobseekerSwipe.jsx";
-import CLScout from "./mocks/CLScout.jsx";
+import ScoutList from "./mocks/ScoutList.jsx";
+import ScoutDetail from "./mocks/ScoutDetail.jsx";
+import AppliedComplete from "./mocks/AppliedComplete.jsx";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -24,9 +24,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="/register-step3" element={<RegisterStep3 />} />
           <Route path="/register-step4" element={<RegisterStep4 />} />
           <Route path="/register-complete" element={<RegisterComplete />} />
-          <Route path="/cs-flow" element={<CSFlow />} />
-          <Route path="/jobseeker" element={<JobseekerSwipe />} />
-          <Route path="/cl" element={<CLScout />} />
+          <Route path="/scout-list" element={<ScoutList />} />
+          <Route path="/scout-detail/:id" element={<ScoutDetail />} />
+          <Route path="/scout-detail" element={<ScoutDetail />} />
+          <Route path="/applied-complete" element={<AppliedComplete />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>

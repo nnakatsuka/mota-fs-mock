@@ -15,9 +15,9 @@ const MOCKS = [
   { path: "/register-step3",     label: "登録 STEP3",         sub: "顔写真" },
   { path: "/register-step4",     label: "登録 STEP4",         sub: "確認画面" },
   { path: "/register-complete",  label: "登録完了",            sub: "ウェルカム" },
-  { path: "/cs-flow",            label: "CS画面フロー",        sub: "16画面フロー版" },
-  { path: "/jobseeker",          label: "求職者スワイプ",       sub: "Hot Pepper Beauty Work型" },
-  { path: "/cl",                 label: "CL求職者一覧",         sub: "車買取事業者向け" },
+  { path: "/scout-list",         label: "D-1 スカウト一覧",     sub: "ログイン後・タブ切替" },
+  { path: "/scout-detail",       label: "D-2 スカウト詳細",     sub: "メッセージ・追従ボタン" },
+  { path: "/applied-complete",   label: "D-3 応募完了",        sub: "応募後の案内画面" },
 ];
 
 export default function Layout() {
