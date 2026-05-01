@@ -9,17 +9,18 @@ const BORDER = "#DDE9F0";
 const TEXT_SUB = "#5A6B7C";
 
 const MOCKS = [
-  { path: "/",                   label: "TOP / LP",         sub: "ランディングページ" },
-  { path: "/register",           label: "登録 STEP1",         sub: "基本情報" },
-  { path: "/register-step2",     label: "登録 STEP2",         sub: "3問Q&A" },
-  { path: "/register-step3",     label: "登録 STEP3",         sub: "顔写真" },
-  { path: "/register-step4",     label: "登録 STEP4",         sub: "確認画面" },
-  { path: "/register-complete",  label: "登録完了",            sub: "ウェルカム" },
-  { path: "/scout-list",         label: "D-1 スカウト一覧",     sub: "ログイン後・タブ切替" },
-  { path: "/scout-detail",       label: "D-2 スカウト詳細",     sub: "メッセージ・追従ボタン" },
-  { path: "/applied-complete",   label: "D-3 応募完了",        sub: "応募後の案内画面" },
-  { path: "/applied-list",       label: "D-4 応募一覧",        sub: "応募タブ" },
-  { path: "/job-detail",         label: "D-5 求人詳細",        sub: "PRポイント・社員の声" },
+  { path: "/",                   label: "A. TOP / LP",          sub: "CSホーム（未登録閲覧可）" },
+  { path: "/register",           label: "B-1 登録 STEP1",        sub: "基本情報" },
+  { path: "/register-step2",     label: "B-2 登録 STEP2",        sub: "3問Q&A" },
+  { path: "/register-step3",     label: "B-3 登録 STEP3",        sub: "顔写真" },
+  { path: "/register-step4",     label: "B-4 登録 STEP4",        sub: "確認画面" },
+  { path: "/register-complete",  label: "B-5 登録完了",           sub: "ウェルカム" },
+  { path: "/scout-list",         label: "D-1 スカウト一覧",       sub: "ログイン後・タブ切替" },
+  { path: "/scout-detail",       label: "D-2 スカウト詳細",       sub: "メッセージ・追従ボタン" },
+  { path: "/applied-complete",   label: "D-3 応募完了",          sub: "応募後の案内画面" },
+  { path: "/applied-list",       label: "D-4 応募一覧",          sub: "応募タブ" },
+  { path: "/job-detail",         label: "D-5 求人詳細",          sub: "PRポイント・社員の声" },
+  { path: "/job-list",           label: "E-1 求人一覧",          sub: "検索・並び替え・絞り込み" },
 ];
 
 export default function Layout() {

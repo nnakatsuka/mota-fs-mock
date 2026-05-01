@@ -13,6 +13,7 @@ import ScoutDetail from "./mocks/ScoutDetail.jsx";
 import AppliedList from "./mocks/AppliedList.jsx";
 import JobDetail from "./mocks/JobDetail.jsx";
 import AppliedComplete from "./mocks/AppliedComplete.jsx";
+import JobList from "./mocks/JobList.jsx";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -30,6 +31,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="/scout-detail/:id" element={<ScoutDetail />} />
           <Route path="/scout-detail" element={<ScoutDetail />} />
           <Route path="/applied-list" element={<AppliedList />} />
+          <Route path="/job-list" element={<JobList />} />
           <Route path="/job-detail/:id" element={<JobDetail />} />
           <Route path="/job-detail" element={<JobDetail />} />
           <Route path="/applied-complete" element={<AppliedComplete />} />
