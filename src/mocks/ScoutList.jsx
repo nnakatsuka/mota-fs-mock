@@ -16,9 +16,9 @@ const TEXT_SUB = "#5A6B7C";
 const TEXT_MUTE = "#A0AEC0";
 
 const STATUS_LABELS = {
-  scout: { label: "スカウト", bg: "#FFE4DC", fg: CTA },
-  hold: { label: "保留", bg: "#FEF3D6", fg: "#B5832A" },
-  decline: { label: "お断り", bg: "#EEEEEE", fg: TEXT_SUB },
+  scout: { label: "スカウト", bg: "#FFE4DC", fg: CTA, border: "#FBBFAA" },
+  hold: { label: "保留", bg: "#FEF3D6", fg: "#B5832A", border: "#E5BD52" },
+  decline: { label: "お断り", bg: "#EEEEEE", fg: TEXT_SUB, border: "#CFD4D8" },
 };
 
 const TABS = [
@@ -56,7 +56,7 @@ function Phone({ children }) {
 }
 
 // スカウトカード
-function ScoutCard({ scout, onClick }) {
+function ScoutCard({ scout, onClick, onDetailClick, onMessageClick }) {
   const statusStyle = STATUS_LABELS[scout.status];
 
   return (
@@ -94,74 +94,97 @@ function ScoutCard({ scout, onClick }) {
 
         {/* 情報 */}
         <div style={{ flex: 1, minWidth: 0 }}>
+          {/* 職種を先に大きく */}
           <div style={{
-            fontSize: 13, fontWeight: 800,
-            color: PRIMARY_DARK, marginBottom: 2,
+            fontSize: 14, fontWeight: 800, color: NAVY,
+            marginBottom: 2, lineHeight: 1.4,
+          }}>
+            {scout.jobTitle}
+          </div>
+          {/* 会社名は下に小さく（リンク色） */}
+          <div style={{
+            fontSize: 11, fontWeight: 700,
+            color: PRIMARY_DARK, marginBottom: 8,
             textDecoration: "underline",
             textDecorationColor: PRIMARY_DARK + "44",
             overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
           }}>
             {scout.company}
           </div>
-          <div style={{
-            fontSize: 12, fontWeight: 700, color: NAVY, marginBottom: 6,
-            lineHeight: 1.4,
-          }}>
-            {scout.jobTitle}
-          </div>
 
           {/* 年収・休日 */}
-          <div style={{ display: "flex", gap: 6, marginBottom: 6, flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
             <div style={{
               fontSize: 10, fontWeight: 700,
-              padding: "2px 8px", borderRadius: 3,
+              padding: "3px 8px", borderRadius: 3,
               background: "#FFF3F0", color: CTA,
             }}>
               年収 {scout.salaryMin} 〜 {scout.salaryMax}万
             </div>
             <div style={{
               fontSize: 10, fontWeight: 700,
-              padding: "2px 8px", borderRadius: 3,
+              padding: "3px 8px", borderRadius: 3,
               background: "#E8F6FD", color: PRIMARY_DARK,
             }}>
               休日 {scout.holidays}日
             </div>
           </div>
-
-          {/* ステータス & アクション */}
-          <div style={{
-            display: "flex", alignItems: "center", justifyContent: "space-between",
-            marginTop: 4,
-          }}>
-            <span style={{
-              fontSize: 10, fontWeight: 800,
-              padding: "3px 10px", borderRadius: 3,
-              background: statusStyle.bg, color: statusStyle.fg,
-            }}>
-              {statusStyle.label}
-            </span>
-            <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-              <span style={{
-                fontSize: 10, fontWeight: 700, color: PRIMARY_DARK,
-                display: "flex", alignItems: "center", gap: 2,
-              }}>
-                スカウト詳細 ›
-              </span>
-              <span style={{
-                position: "relative", fontSize: 14,
-              }}>
-                💬
-                {scout.isNew && (
-                  <span style={{
-                    position: "absolute", top: -2, right: -2,
-                    width: 6, height: 6, borderRadius: "50%",
-                    background: CTA, border: "1px solid #fff",
-                  }} />
-                )}
-              </span>
-            </div>
-          </div>
         </div>
+      </div>
+
+      {/* アクションボタン群（ステータス + 詳細 + メッセージ） */}
+      <div style={{
+        display: "flex", gap: 6, marginTop: 12,
+        paddingTop: 10, borderTop: `1px solid ${BORDER}`,
+      }}>
+        {/* ステータスボタン */}
+        <button style={{
+          flex: 1, height: 34,
+          background: statusStyle.bg, color: statusStyle.fg,
+          border: `1.5px solid ${statusStyle.border}`,
+          borderRadius: 17,
+          fontSize: 11, fontWeight: 800,
+          cursor: "default",
+          fontFamily: "inherit",
+        }}>
+          {statusStyle.label}
+        </button>
+        {/* スカウト詳細ボタン */}
+        <button onClick={(e) => { e.stopPropagation(); onDetailClick && onDetailClick(); }} style={{
+          flex: 1.2, height: 34,
+          background: "#fff", color: PRIMARY_DARK,
+          border: `1.5px solid ${PRIMARY}`,
+          borderRadius: 17,
+          fontSize: 11, fontWeight: 800,
+          cursor: "pointer",
+          fontFamily: "inherit",
+          display: "flex", alignItems: "center", justifyContent: "center", gap: 3,
+        }}>
+          <span>📋</span>
+          <span>スカウト詳細</span>
+        </button>
+        {/* メッセージボタン */}
+        <button onClick={(e) => { e.stopPropagation(); onMessageClick && onMessageClick(); }} style={{
+          flex: 1, height: 34,
+          background: "#fff", color: PRIMARY_DARK,
+          border: `1.5px solid ${PRIMARY}`,
+          borderRadius: 17,
+          fontSize: 11, fontWeight: 800,
+          cursor: "pointer",
+          fontFamily: "inherit",
+          display: "flex", alignItems: "center", justifyContent: "center", gap: 3,
+          position: "relative",
+        }}>
+          <span>💬</span>
+          <span>メッセージ</span>
+          {scout.isNew && (
+            <span style={{
+              position: "absolute", top: -2, right: -2,
+              width: 8, height: 8, borderRadius: "50%",
+              background: CTA, border: "1.5px solid #fff",
+            }} />
+          )}
+        </button>
       </div>
     </div>
   );
@@ -292,7 +315,9 @@ export default function ScoutList() {
             ) : (
               filtered.map(s => (
                 <ScoutCard key={s.id} scout={s}
-                  onClick={() => navigate(`/scout-detail/${s.id}`)} />
+                  onClick={() => navigate(`/scout-detail/${s.id}`)}
+                  onDetailClick={() => navigate(`/scout-detail/${s.id}`)}
+                  onMessageClick={() => alert("メッセージ画面へ（モック）")} />
               ))
             )}
           </div>
