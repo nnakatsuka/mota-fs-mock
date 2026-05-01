@@ -94,7 +94,7 @@ function ScoutCard({ scout, onClick, onDetailClick, onMessageClick }) {
         </div>
 
         <div style={{ flex: 1, minWidth: 0, paddingRight: 30 }}>
-          {/* 会社名（上・大きい） */}
+          {/* 職種（上・大きい・青リンク） */}
           <div style={{
             fontSize: 14, fontWeight: 800,
             color: PRIMARY_DARK, marginBottom: 2,
@@ -103,14 +103,14 @@ function ScoutCard({ scout, onClick, onDetailClick, onMessageClick }) {
             overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
             lineHeight: 1.3,
           }}>
-            {scout.company}
+            {scout.jobTitle}
           </div>
-          {/* 職種・場所（下・小さい） */}
+          {/* 会社名・場所（下・小さい・グレー） */}
           <div style={{
             fontSize: 11, color: TEXT_SUB, fontWeight: 600,
             marginBottom: 8, lineHeight: 1.4,
           }}>
-            {scout.jobTitle}・{scout.location}
+            {scout.company}・{scout.location}
           </div>
 
           <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
