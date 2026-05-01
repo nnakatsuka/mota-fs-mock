@@ -267,15 +267,20 @@ export default function ScoutList() {
         </div>
 
         <Phone>
-          <div style={{
-            height: 50, background: "#fff", borderBottom: `1px solid ${BORDER}`,
+         <div style={{
+            height: 56, background: "#fff", borderBottom: `1px solid ${BORDER}`,
             display: "flex", alignItems: "center", justifyContent: "space-between",
             padding: "0 16px", flexShrink: 0,
           }}>
-            <img src={logoUrl} alt="タップミー / TAPME" style={{ height: 28, objectFit: "contain" }} />
+            <img
+              src={logoUrl}
+              alt="タップミー / TAPME"
+              onClick={() => navigate("/")}
+              style={{ height: 40, objectFit: "contain", cursor: "pointer" }}
+            />
             <span style={{ fontSize: 18, color: TEXT_SUB, cursor: "pointer" }}>☰</span>
           </div>
-
+          
           <div style={{
             display: "flex", padding: "0 8px", background: "#fff",
             borderBottom: `1px solid ${BORDER}`, flexShrink: 0,
