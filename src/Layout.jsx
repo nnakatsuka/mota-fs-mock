@@ -1,17 +1,23 @@
 import { NavLink, Outlet, useLocation } from "react-router-dom";
+import logoUrl from "./assets/tapme-logo.png";
 
-const ACCENT = "#E8593C";
-const NAVY = "#1F3554";
-const BG = "#F0EFEB";
-const BORDER = "#E8E6E1";
-const TEXT = "#1a1a1a";
-const TEXT_SUB = "#5F5E5A";
+const PRIMARY = "#3FB6E8";       // TAPME Bright Blue
+const PRIMARY_DARK = "#059CDB";  // TAPME Bright Blue #2
+const NAVY = "#0A2540";
+const BG = "#F4FAFE";
+const BORDER = "#DDE9F0";
+const TEXT_SUB = "#5A6B7C";
 
 const MOCKS = [
-  { path: "/",          label: "TOP / LP",        sub: "ランディングページ" },
-  { path: "/cs-flow",   label: "CS画面フロー",      sub: "16画面フロー版" },
-  { path: "/jobseeker", label: "求職者スワイプ",     sub: "Hot Pepper Beauty Work型" },
-  { path: "/cl",        label: "CL求職者一覧",       sub: "車買取事業者向け" },
+  { path: "/",                   label: "TOP / LP",         sub: "ランディングページ" },
+  { path: "/register",           label: "登録 STEP1",         sub: "基本情報" },
+  { path: "/register-step2",     label: "登録 STEP2",         sub: "3問Q&A" },
+  { path: "/register-step3",     label: "登録 STEP3",         sub: "顔写真" },
+  { path: "/register-step4",     label: "登録 STEP4",         sub: "確認画面" },
+  { path: "/register-complete",  label: "登録完了",            sub: "ウェルカム" },
+  { path: "/cs-flow",            label: "CS画面フロー",        sub: "16画面フロー版" },
+  { path: "/jobseeker",          label: "求職者スワイプ",       sub: "Hot Pepper Beauty Work型" },
+  { path: "/cl",                 label: "CL求職者一覧",         sub: "車買取事業者向け" },
 ];
 
 export default function Layout() {
@@ -21,7 +27,7 @@ export default function Layout() {
       {/* Top utility bar */}
       <div
         style={{
-          background: "#1a1a1a",
+          background: NAVY,
           color: "#fff",
           padding: "10px 20px",
           display: "flex",
@@ -30,45 +36,22 @@ export default function Layout() {
           flexWrap: "wrap",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <div
-            style={{
-              width: 26,
-              height: 26,
-              borderRadius: 6,
-              background: ACCENT,
-              color: "#fff",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontWeight: 800,
-              fontSize: 13,
-            }}
-          >
-            M
-          </div>
-          <div>
-            <div style={{ fontSize: 13, fontWeight: 800, lineHeight: 1.1 }}>
-              MOTA Work
-            </div>
-            <div
-              style={{
-                fontSize: 9,
-                opacity: 0.65,
-                lineHeight: 1.1,
-                marginTop: 2,
-              }}
-            >
-              F/S Mock Collection
-            </div>
-          </div>
-        </div>
+        <img
+          src={logoUrl}
+          alt="タップミー / TAPME"
+          style={{
+            height: 26,
+            objectFit: "contain",
+            filter: "brightness(0) invert(1)",
+            opacity: 0.95,
+          }}
+        />
 
         <div
           style={{
             display: "inline-block",
             padding: "3px 10px",
-            background: ACCENT,
+            background: PRIMARY,
             color: "#fff",
             borderRadius: 4,
             fontSize: 10,
@@ -81,7 +64,7 @@ export default function Layout() {
 
         <div style={{ flex: 1 }} />
 
-        <div style={{ fontSize: 10, opacity: 0.55 }}>v0.1 / 2026.05</div>
+        <div style={{ fontSize: 10, opacity: 0.55 }}>v0.2 / 2026.05</div>
       </div>
 
       {/* Mock switcher tabs */}
@@ -108,8 +91,8 @@ export default function Layout() {
                 fontSize: 12,
                 fontWeight: active ? 700 : 500,
                 color: active ? "#fff" : TEXT_SUB,
-                background: active ? NAVY : "#fff",
-                border: `1px solid ${active ? NAVY : BORDER}`,
+                background: active ? PRIMARY_DARK : "#fff",
+                border: `1px solid ${active ? PRIMARY_DARK : BORDER}`,
                 whiteSpace: "nowrap",
                 lineHeight: 1.3,
                 display: "flex",
@@ -121,7 +104,7 @@ export default function Layout() {
                 style={{
                   fontSize: 9,
                   fontWeight: 500,
-                  opacity: active ? 0.8 : 0.6,
+                  opacity: active ? 0.85 : 0.6,
                   marginTop: 1,
                 }}
               >
