@@ -16,9 +16,9 @@ const TEXT_SUB = "#5A6B7C";
 const TEXT_MUTE = "#A0AEC0";
 
 const STATUS_LABELS = {
-  scout: { label: "スカウト", bg: "#FFE4DC", fg: CTA, border: "#FBBFAA" },
-  hold: { label: "保留", bg: "#FEF3D6", fg: "#B5832A", border: "#E5BD52" },
-  decline: { label: "お断り", bg: "#EEEEEE", fg: TEXT_SUB, border: "#CFD4D8" },
+  scout: { label: "スカウト", bg: "#FFE4DC", fg: CTA },
+  hold: { label: "保留", bg: "#FEF3D6", fg: "#B5832A" },
+  decline: { label: "お断り", bg: "#EEEEEE", fg: TEXT_SUB },
 };
 
 const TABS = [
@@ -55,133 +55,136 @@ function Phone({ children }) {
   );
 }
 
-// スカウトカード
 function ScoutCard({ scout, onClick, onDetailClick, onMessageClick }) {
   const statusStyle = STATUS_LABELS[scout.status];
 
   return (
     <div onClick={onClick} style={{
       background: "#fff", borderRadius: 14,
-      padding: 14, marginBottom: 10,
+      marginBottom: 10,
       border: `1px solid ${BORDER}`,
       cursor: "pointer",
       transition: "transform 0.12s, box-shadow 0.12s",
       position: "relative",
+      overflow: "hidden",
     }}
     onMouseEnter={e => e.currentTarget.style.boxShadow = "0 4px 16px rgba(10,37,64,0.1)"}
     onMouseLeave={e => e.currentTarget.style.boxShadow = "none"}>
-      {/* NEW バッジ */}
       {scout.isNew && (
         <div style={{
-          position: "absolute", top: -6, right: 12,
+          position: "absolute", top: 0, right: 0,
           background: CTA, color: "#fff",
           fontSize: 9, fontWeight: 900, letterSpacing: 1,
-          padding: "3px 8px", borderRadius: 4,
-          boxShadow: "0 2px 6px rgba(232,89,60,0.4)",
+          padding: "3px 10px",
+          borderBottomLeftRadius: 8,
+          boxShadow: "0 2px 6px rgba(232,89,60,0.3)",
         }}>NEW</div>
       )}
 
-      <div style={{ display: "flex", gap: 12 }}>
-        {/* 企業ロゴ */}
+      <div style={{ padding: "14px 14px 12px", display: "flex", gap: 12 }}>
         <div style={{
-          width: 50, height: 50, borderRadius: 8,
+          width: 48, height: 48, borderRadius: 8,
           background: scout.iconBg,
           display: "flex", alignItems: "center", justifyContent: "center",
-          fontSize: 26, flexShrink: 0,
+          fontSize: 11, fontWeight: 700, color: scout.iconColor,
+          flexShrink: 0,
+          border: `1px solid ${BORDER}`,
         }}>
-          {scout.icon}
+          ロゴ
         </div>
 
-        {/* 情報 */}
-        <div style={{ flex: 1, minWidth: 0 }}>
-          {/* 職種を先に大きく */}
+        <div style={{ flex: 1, minWidth: 0, paddingRight: 30 }}>
           <div style={{
-            fontSize: 14, fontWeight: 800, color: NAVY,
-            marginBottom: 2, lineHeight: 1.4,
-          }}>
-            {scout.jobTitle}
-          </div>
-          {/* 会社名は下に小さく（リンク色） */}
-          <div style={{
-            fontSize: 11, fontWeight: 700,
-            color: PRIMARY_DARK, marginBottom: 8,
+            fontSize: 14, fontWeight: 800,
+            color: PRIMARY_DARK, marginBottom: 2,
             textDecoration: "underline",
-            textDecorationColor: PRIMARY_DARK + "44",
+            textDecorationColor: PRIMARY_DARK + "55",
             overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
+            lineHeight: 1.3,
           }}>
             {scout.company}
           </div>
+          <div style={{
+            fontSize: 11, color: TEXT_SUB, fontWeight: 600,
+            marginBottom: 8, lineHeight: 1.4,
+          }}>
+            {scout.jobTitle}・{scout.location}
+          </div>
 
-          {/* 年収・休日 */}
           <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
             <div style={{
               fontSize: 10, fontWeight: 700,
               padding: "3px 8px", borderRadius: 3,
               background: "#FFF3F0", color: CTA,
+              display: "flex", alignItems: "center", gap: 4,
             }}>
-              年収 {scout.salaryMin} 〜 {scout.salaryMax}万
+              <span style={{
+                fontSize: 8, padding: "0 4px",
+                background: CTA, color: "#fff", borderRadius: 2,
+              }}>年収</span>
+              {scout.salaryMin}〜{scout.salaryMax}万
             </div>
             <div style={{
               fontSize: 10, fontWeight: 700,
               padding: "3px 8px", borderRadius: 3,
               background: "#E8F6FD", color: PRIMARY_DARK,
+              display: "flex", alignItems: "center", gap: 4,
             }}>
-              休日 {scout.holidays}日
+              <span style={{
+                fontSize: 8, padding: "0 4px",
+                background: PRIMARY_DARK, color: "#fff", borderRadius: 2,
+              }}>休日</span>
+              {scout.holidays}日
             </div>
           </div>
         </div>
       </div>
 
-      {/* アクションボタン群（ステータス + 詳細 + メッセージ） */}
       <div style={{
-        display: "flex", gap: 6, marginTop: 12,
-        paddingTop: 10, borderTop: `1px solid ${BORDER}`,
+        position: "absolute",
+        top: scout.isNew ? 28 : 14,
+        right: 14,
+        fontSize: 10, fontWeight: 800,
+        padding: "4px 12px", borderRadius: 4,
+        background: statusStyle.bg, color: statusStyle.fg,
       }}>
-        {/* ステータスボタン */}
-        <button style={{
-          flex: 1, height: 34,
-          background: statusStyle.bg, color: statusStyle.fg,
-          border: `1.5px solid ${statusStyle.border}`,
-          borderRadius: 17,
-          fontSize: 11, fontWeight: 800,
-          cursor: "default",
-          fontFamily: "inherit",
-        }}>
-          {statusStyle.label}
-        </button>
-        {/* スカウト詳細ボタン */}
+        {statusStyle.label}
+      </div>
+
+      <div style={{
+        display: "flex",
+        borderTop: `1px solid ${BORDER}`,
+      }}>
         <button onClick={(e) => { e.stopPropagation(); onDetailClick && onDetailClick(); }} style={{
-          flex: 1.2, height: 34,
-          background: "#fff", color: PRIMARY_DARK,
-          border: `1.5px solid ${PRIMARY}`,
-          borderRadius: 17,
-          fontSize: 11, fontWeight: 800,
+          flex: 1, padding: "10px 0",
+          background: "#fff", color: TEXT,
+          border: "none",
+          borderRight: `1px solid ${BORDER}`,
+          fontSize: 11, fontWeight: 700,
           cursor: "pointer",
           fontFamily: "inherit",
-          display: "flex", alignItems: "center", justifyContent: "center", gap: 3,
+          display: "flex", alignItems: "center", justifyContent: "center", gap: 4,
         }}>
-          <span>📋</span>
-          <span>スカウト詳細</span>
+          <span style={{ fontSize: 12 }}>📋</span>
+          <span style={{ color: PRIMARY_DARK }}>スカウト詳細</span>
         </button>
-        {/* メッセージボタン */}
         <button onClick={(e) => { e.stopPropagation(); onMessageClick && onMessageClick(); }} style={{
-          flex: 1, height: 34,
-          background: "#fff", color: PRIMARY_DARK,
-          border: `1.5px solid ${PRIMARY}`,
-          borderRadius: 17,
-          fontSize: 11, fontWeight: 800,
+          flex: 1, padding: "10px 0",
+          background: "#fff", color: TEXT,
+          border: "none",
+          fontSize: 11, fontWeight: 700,
           cursor: "pointer",
           fontFamily: "inherit",
-          display: "flex", alignItems: "center", justifyContent: "center", gap: 3,
+          display: "flex", alignItems: "center", justifyContent: "center", gap: 4,
           position: "relative",
         }}>
-          <span>💬</span>
-          <span>メッセージ</span>
+          <span style={{ fontSize: 12 }}>💬</span>
+          <span style={{ color: PRIMARY_DARK }}>メッセージ</span>
           {scout.isNew && (
             <span style={{
-              position: "absolute", top: -2, right: -2,
-              width: 8, height: 8, borderRadius: "50%",
-              background: CTA, border: "1.5px solid #fff",
+              position: "absolute", top: 8, right: 18,
+              width: 7, height: 7, borderRadius: "50%",
+              background: CTA,
             }} />
           )}
         </button>
@@ -190,7 +193,6 @@ function ScoutCard({ scout, onClick, onDetailClick, onMessageClick }) {
   );
 }
 
-// 下部ナビ
 function BottomNav({ activeTab = "scout" }) {
   const items = [
     { id: "search", icon: "🔍", label: "求人検索" },
@@ -263,7 +265,6 @@ export default function ScoutList() {
         </div>
 
         <Phone>
-          {/* ヘッダー */}
           <div style={{
             height: 50, background: "#fff", borderBottom: `1px solid ${BORDER}`,
             display: "flex", alignItems: "center", justifyContent: "space-between",
@@ -273,7 +274,6 @@ export default function ScoutList() {
             <span style={{ fontSize: 18, color: TEXT_SUB, cursor: "pointer" }}>☰</span>
           </div>
 
-          {/* タブ */}
           <div style={{
             display: "flex", padding: "0 8px", background: "#fff",
             borderBottom: `1px solid ${BORDER}`, flexShrink: 0,
@@ -303,7 +303,6 @@ export default function ScoutList() {
             })}
           </div>
 
-          {/* リスト */}
           <div style={{ flex: 1, overflowY: "auto", background: BG, padding: "12px 12px" }}>
             {filtered.length === 0 ? (
               <div style={{
