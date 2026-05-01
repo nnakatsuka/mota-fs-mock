@@ -130,10 +130,10 @@ function PhotoTile({ emoji, idx }) {
   );
 }
 
-function PerkRow({ label, value, highlight }) {
+function PerkRow({ label, value, sub, highlight }) {
   return (
     <div style={{
-      display: "flex", padding: "12px 0",
+      display: "flex", padding: "10px 0",
       borderBottom: `1px solid ${BORDER}`,
       gap: 10, alignItems: "flex-start",
     }}>
@@ -145,11 +145,21 @@ function PerkRow({ label, value, highlight }) {
       }}>
         {label}
       </div>
-      <div style={{
-        flex: 1, fontSize: 13, fontWeight: 700,
-        color: TEXT, lineHeight: 1.5, whiteSpace: "pre-wrap",
-      }}>
-        {value}
+      <div style={{ flex: 1 }}>
+        <div style={{
+          fontSize: 14, fontWeight: 800,
+          color: TEXT, lineHeight: 1.4, whiteSpace: "pre-wrap",
+        }}>
+          {value}
+        </div>
+        {sub && (
+          <div style={{
+            fontSize: 11, color: TEXT_SUB, marginTop: 2,
+            fontWeight: 600, lineHeight: 1.5, whiteSpace: "pre-wrap",
+          }}>
+            {sub}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -397,11 +407,21 @@ export default function ScoutDetail() {
                 <span>📋</span>
                 <span>求人情報の詳細</span>
               </div>
-              <PerkRow label="年収" value={scout.perks.annualIncome} highlight />
-              <PerkRow label="月給" value={scout.perks.monthly} />
-              <PerkRow label="休日" value={scout.perks.holidays} />
-              <PerkRow label="勤務" value={scout.perks.schedule} />
-              <PerkRow label="その他" value={scout.perks.others} />
+              <PerkRow
+                label="年収"
+                value={scout.perks.annualIncome}
+                sub={scout.perks.monthly}
+                highlight
+              />
+              <PerkRow
+                label="休日"
+                value={scout.perks.holidays}
+                sub={scout.perks.schedule}
+              />
+              <PerkRow
+                label="そのほか"
+                value={scout.perks.others}
+              />
             </div>
 
             <div style={{ padding: "8px 16px 16px" }}>
