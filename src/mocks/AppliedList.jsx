@@ -20,6 +20,11 @@ const APP_STATUS_LABELS = {
   rejected:{ label: "不採用", bg: "#FFE0E0", fg: "#C44529" },
 };
 
+const SOURCE_LABELS = {
+  scout:          { label: "スカウト",  icon: "📩", bg: "#FFF3F0", fg: CTA,        border: "#FCD9CA" },
+  "self-applied": { label: "自己応募",  icon: "✋", bg: "#F1EFE8", fg: TEXT_SUB,   border: BORDER   },
+};
+
 const TABS = [
   { id: "all", label: "すべて" },
   { id: "applied", label: "応募済" },
@@ -53,25 +58,50 @@ function Phone({ children }) {
   );
 }
 
-function ApplicationCard({ scout, onTopClick, onMessageClick }) {
+function ApplicationCard({ scout, onClick }) {
   const statusStyle = APP_STATUS_LABELS[scout.appStatus] || APP_STATUS_LABELS.applied;
+  const sourceStyle = SOURCE_LABELS[scout.source] || SOURCE_LABELS["self-applied"];
 
   return (
-    <div style={{
+    <div onClick={onClick} style={{
       background: "#fff", borderRadius: 14,
       marginBottom: 10,
       border: `1px solid ${BORDER}`,
       transition: "transform 0.12s, box-shadow 0.12s",
       position: "relative",
       overflow: "hidden",
-    }}>
-      {/* 上部クリック可能ゾーン → 求人詳細へ */}
-      <div onClick={onTopClick} style={{
-        padding: "14px 14px 12px", display: "flex", gap: 12,
-        cursor: "pointer",
-      }}
-      onMouseEnter={e => e.currentTarget.style.background = "#FAFCFE"}
-      onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
+      cursor: "pointer",
+    }}
+    onMouseEnter={e => e.currentTarget.style.boxShadow = "0 4px 16px rgba(10,37,64,0.1)"}
+    onMouseLeave={e => e.currentTarget.style.boxShadow = "none"}>
+
+      {/* ヘッダー行：sourceラベル（左）+ ステータス（右） */}
+      <div style={{
+        display: "flex", justifyContent: "space-between", alignItems: "center",
+        padding: "10px 14px 0 14px",
+      }}>
+        <div style={{
+          display: "inline-flex", alignItems: "center", gap: 4,
+          padding: "3px 10px",
+          background: sourceStyle.bg, color: sourceStyle.fg,
+          border: `1px solid ${sourceStyle.border}`,
+          borderRadius: 12,
+          fontSize: 11, fontWeight: 700, letterSpacing: 0.3,
+        }}>
+          <span style={{ fontSize: 11 }}>{sourceStyle.icon}</span>
+          <span>{sourceStyle.label}</span>
+        </div>
+        <div style={{
+          fontSize: 10, fontWeight: 800,
+          padding: "4px 12px", borderRadius: 4,
+          background: statusStyle.bg, color: statusStyle.fg,
+        }}>
+          {statusStyle.label}
+        </div>
+      </div>
+
+      {/* 本体：ロゴ + 情報 */}
+      <div style={{ padding: "10px 14px 14px", display: "flex", gap: 12 }}>
         <div style={{
           width: 48, height: 48, borderRadius: 8,
           background: scout.iconBg,
@@ -83,7 +113,7 @@ function ApplicationCard({ scout, onTopClick, onMessageClick }) {
           ロゴ
         </div>
 
-        <div style={{ flex: 1, minWidth: 0, paddingRight: 70 /* ステータス分 */ }}>
+        <div style={{ flex: 1, minWidth: 0 }}>
           {/* 職種（青リンク色・大） */}
           <div style={{
             fontSize: 14, fontWeight: 800,
@@ -130,41 +160,6 @@ function ApplicationCard({ scout, onTopClick, onMessageClick }) {
             </div>
           </div>
         </div>
-      </div>
-
-      {/* ステータスラベル */}
-      <div style={{
-        position: "absolute",
-        top: 14,
-        right: 14,
-        fontSize: 10, fontWeight: 800,
-        padding: "4px 12px", borderRadius: 4,
-        background: statusStyle.bg, color: statusStyle.fg,
-      }}>
-        {statusStyle.label}
-      </div>
-
-      {/* 下段：メッセージのみ（スカウト一覧と違って詳細ボタンは無し） */}
-      <div style={{ borderTop: `1px solid ${BORDER}` }}>
-        <button onClick={(e) => { e.stopPropagation(); onMessageClick && onMessageClick(); }} style={{
-          width: "100%", padding: "10px 0",
-          background: "#fff", color: TEXT,
-          border: "none",
-          fontSize: 11, fontWeight: 700,
-          cursor: "pointer",
-          fontFamily: "inherit",
-          display: "flex", alignItems: "center", justifyContent: "center", gap: 4,
-          position: "relative",
-        }}>
-          <span style={{ fontSize: 12 }}>💬</span>
-          <span style={{ color: PRIMARY_DARK }}>メッセージ</span>
-          {scout.isNew && (
-            <span style={{
-              width: 7, height: 7, borderRadius: "50%",
-              background: CTA, marginLeft: 4,
-            }} />
-          )}
-        </button>
       </div>
     </div>
   );
@@ -220,6 +215,15 @@ export default function AppliedList() {
     result: SCOUTS.filter(s => s.appStatus === "hired" || s.appStatus === "rejected").length,
   };
 
+  // 遷移先分岐：スカウト経由 → スカウト詳細、自己応募 → 求人詳細
+  const handleCardClick = (scout) => {
+    if (scout.source === "scout") {
+      navigate(`/scout-detail/${scout.id}`);
+    } else {
+      navigate(`/job-detail/${scout.id}`);
+    }
+  };
+
   return (
     <div style={{
       minHeight: "100vh", background: BG, padding: "20px 0 40px",
@@ -236,7 +240,7 @@ export default function AppliedList() {
           <div style={{ fontSize: 13, color: TEXT_SUB, lineHeight: 1.6 }}>
             ログイン後 / 応募タブ<br/>
             <span style={{ fontSize: 11, color: TEXT_MUTE }}>
-              ※カード上部タップで求人詳細へ遷移
+              ※カードタップで詳細へ遷移（スカウト経由→スカウト詳細／自己応募→求人詳細）
             </span>
           </div>
         </div>
@@ -299,8 +303,7 @@ export default function AppliedList() {
             ) : (
               filtered.map(s => (
                 <ApplicationCard key={s.id} scout={s}
-                  onTopClick={() => navigate(`/job-detail/${s.id}`)}
-                  onMessageClick={() => alert("メッセージ画面へ（モック）")} />
+                  onClick={() => handleCardClick(s)} />
               ))
             )}
           </div>
