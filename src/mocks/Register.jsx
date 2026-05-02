@@ -232,9 +232,31 @@ function EmailInput({ value, onChange, onBlur, hasError }) {
 }
 
 function BirthdayPicker({ value, onChange }) {
-  const years = Array.from({ length: 60 }, (_, i) => 2005 - i); // 2005, 2004, ..., 1946
-  const months = Array.from({ length: 12 }, (_, i) => i + 1);
-  const days = Array.from({ length: 31 }, (_, i) => i + 1);
+  // 16歳以上登録可能（2026 - 16 = 2010が上限）
+  const MAX_YEAR = 2010;
+  const MIN_YEAR = 1947;
+  const TARGET_YEAR = 2005;   // プレースホルダの直下に置く年
+  const TARGET_MONTH = 4;     // プレースホルダの直下に置く月
+  const TARGET_DAY = 15;      // プレースホルダの直下に置く日
+
+  // 年：[2010〜2006] | ーーーー | [2005〜1947]
+  const yearsAbove = [];
+  for (let y = MAX_YEAR; y > TARGET_YEAR; y--) yearsAbove.push(y);
+  const yearsBelow = [];
+  for (let y = TARGET_YEAR; y >= MIN_YEAR; y--) yearsBelow.push(y);
+
+  // 月：[1〜3] | ーー | [4〜12]
+  const monthsAbove = [];
+  for (let m = 1; m < TARGET_MONTH; m++) monthsAbove.push(m);
+  const monthsBelow = [];
+  for (let m = TARGET_MONTH; m <= 12; m++) monthsBelow.push(m);
+
+  // 日：[1〜14] | ーー | [15〜31]
+  const daysAbove = [];
+  for (let d = 1; d < TARGET_DAY; d++) daysAbove.push(d);
+  const daysBelow = [];
+  for (let d = TARGET_DAY; d <= 31; d++) daysBelow.push(d);
+
   const [year, month, day] = value || [null, null, null];
 
   const selectStyle = {
@@ -248,31 +270,34 @@ function BirthdayPicker({ value, onChange }) {
   };
 
   const placeholderColor = TEXT_MUTE;
-  const yearStyle = { ...selectStyle, color: year ? TEXT : placeholderColor };
+  const yearStyle  = { ...selectStyle, color: year  ? TEXT : placeholderColor };
   const monthStyle = { ...selectStyle, flex: 0.7, color: month ? TEXT : placeholderColor };
-  const dayStyle = { ...selectStyle, flex: 0.7, color: day ? TEXT : placeholderColor };
+  const dayStyle   = { ...selectStyle, flex: 0.7, color: day   ? TEXT : placeholderColor };
 
   return (
     <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
       <select value={year || ""}
         onChange={e => onChange([e.target.value ? +e.target.value : null, month, day])}
         style={yearStyle}>
+        {yearsAbove.map(y => <option key={y} value={y}>{y}</option>)}
         <option value="">ーーーー</option>
-        {years.map(y => <option key={y} value={y}>{y}</option>)}
+        {yearsBelow.map(y => <option key={y} value={y}>{y}</option>)}
       </select>
       <span style={{ fontSize: 12, color: TEXT_SUB }}>年</span>
       <select value={month || ""}
         onChange={e => onChange([year, e.target.value ? +e.target.value : null, day])}
         style={monthStyle}>
+        {monthsAbove.map(m => <option key={m} value={m}>{m}</option>)}
         <option value="">ーー</option>
-        {months.map(m => <option key={m} value={m}>{m}</option>)}
+        {monthsBelow.map(m => <option key={m} value={m}>{m}</option>)}
       </select>
       <span style={{ fontSize: 12, color: TEXT_SUB }}>月</span>
       <select value={day || ""}
         onChange={e => onChange([year, month, e.target.value ? +e.target.value : null])}
         style={dayStyle}>
+        {daysAbove.map(d => <option key={d} value={d}>{d}</option>)}
         <option value="">ーー</option>
-        {days.map(d => <option key={d} value={d}>{d}</option>)}
+        {daysBelow.map(d => <option key={d} value={d}>{d}</option>)}
       </select>
       <span style={{ fontSize: 12, color: TEXT_SUB }}>日</span>
     </div>
