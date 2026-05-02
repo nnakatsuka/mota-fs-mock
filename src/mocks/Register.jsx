@@ -52,7 +52,7 @@ const validate = {
     return digits.length >= 10 && digits.length <= 11;
   },
   email: (v) => /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(v || ""),
-  birthday: () => true,
+  birthday: (v) => Boolean(v && v[0] && v[1] && v[2]),
   address: (v) => Boolean(v?.pref && v?.city),
   edu: (v) => Boolean(v),
   hasCarLicense: (v) => v !== null && v !== undefined,
@@ -232,11 +232,10 @@ function EmailInput({ value, onChange, onBlur, hasError }) {
 }
 
 function BirthdayPicker({ value, onChange }) {
-  const currentYear = 2026;
-  const years = Array.from({ length: 60 }, (_, i) => currentYear - 18 - i);
+  const years = Array.from({ length: 60 }, (_, i) => 2005 - i); // 2005, 2004, ..., 1946
   const months = Array.from({ length: 12 }, (_, i) => i + 1);
   const days = Array.from({ length: 31 }, (_, i) => i + 1);
-  const [year, month, day] = value || [currentYear - 25, 1, 1];
+  const [year, month, day] = value || [null, null, null];
 
   const selectStyle = {
     flex: 1, height: 44, padding: "0 8px",
@@ -248,17 +247,31 @@ function BirthdayPicker({ value, onChange }) {
     paddingRight: 26, fontFamily: "inherit",
   };
 
+  const placeholderColor = TEXT_MUTE;
+  const yearStyle = { ...selectStyle, color: year ? TEXT : placeholderColor };
+  const monthStyle = { ...selectStyle, flex: 0.7, color: month ? TEXT : placeholderColor };
+  const dayStyle = { ...selectStyle, flex: 0.7, color: day ? TEXT : placeholderColor };
+
   return (
     <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
-      <select value={year} onChange={e => onChange([+e.target.value, month, day])} style={selectStyle}>
+      <select value={year || ""}
+        onChange={e => onChange([e.target.value ? +e.target.value : null, month, day])}
+        style={yearStyle}>
+        <option value="">ーーーー</option>
         {years.map(y => <option key={y} value={y}>{y}</option>)}
       </select>
       <span style={{ fontSize: 12, color: TEXT_SUB }}>年</span>
-      <select value={month} onChange={e => onChange([year, +e.target.value, day])} style={{...selectStyle, flex: 0.7}}>
+      <select value={month || ""}
+        onChange={e => onChange([year, e.target.value ? +e.target.value : null, day])}
+        style={monthStyle}>
+        <option value="">ーー</option>
         {months.map(m => <option key={m} value={m}>{m}</option>)}
       </select>
       <span style={{ fontSize: 12, color: TEXT_SUB }}>月</span>
-      <select value={day} onChange={e => onChange([year, month, +e.target.value])} style={{...selectStyle, flex: 0.7}}>
+      <select value={day || ""}
+        onChange={e => onChange([year, month, e.target.value ? +e.target.value : null])}
+        style={dayStyle}>
+        <option value="">ーー</option>
         {days.map(d => <option key={d} value={d}>{d}</option>)}
       </select>
       <span style={{ fontSize: 12, color: TEXT_SUB }}>日</span>
@@ -507,7 +520,7 @@ export default function Register() {
   const [name, setName] = useState(s1.name || "");
   const [tel, setTel] = useState(s1.tel || "");
   const [email, setEmail] = useState(s1.email || "");
-  const [birthday, setBirthday] = useState(s1.birthday || [2001, 4, 1]);
+  const [birthday, setBirthday] = useState(s1.birthday || [null, null, null]);
   const [address, setAddress] = useState(s1.address || { pref: "", city: "" });
   const [edu, setEdu] = useState(s1.edu || "");
   const [hasCarLicense, setHasCarLicense] = useState(
