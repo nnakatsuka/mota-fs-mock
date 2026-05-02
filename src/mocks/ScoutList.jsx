@@ -153,44 +153,7 @@ function ScoutCard({ scout, onClick, onDetailClick, onMessageClick }) {
         {statusStyle.label}
       </div>
 
-      <div style={{
-        display: "flex",
-        borderTop: `1px solid ${BORDER}`,
-      }}>
-        <button onClick={(e) => { e.stopPropagation(); onDetailClick && onDetailClick(); }} style={{
-          flex: 1, padding: "10px 0",
-          background: "#fff", color: TEXT,
-          border: "none",
-          borderRight: `1px solid ${BORDER}`,
-          fontSize: 11, fontWeight: 700,
-          cursor: "pointer",
-          fontFamily: "inherit",
-          display: "flex", alignItems: "center", justifyContent: "center", gap: 4,
-        }}>
-          <span style={{ fontSize: 12 }}>📋</span>
-          <span style={{ color: PRIMARY_DARK }}>スカウト詳細</span>
-        </button>
-        <button onClick={(e) => { e.stopPropagation(); onMessageClick && onMessageClick(); }} style={{
-          flex: 1, padding: "10px 0",
-          background: "#fff", color: TEXT,
-          border: "none",
-          fontSize: 11, fontWeight: 700,
-          cursor: "pointer",
-          fontFamily: "inherit",
-          display: "flex", alignItems: "center", justifyContent: "center", gap: 4,
-          position: "relative",
-        }}>
-          <span style={{ fontSize: 12 }}>💬</span>
-          <span style={{ color: PRIMARY_DARK }}>メッセージ</span>
-          {scout.isNew && (
-            <span style={{
-              position: "absolute", top: 8, right: 18,
-              width: 7, height: 7, borderRadius: "50%",
-              background: CTA,
-            }} />
-          )}
-        </button>
-      </div>
+      
     </div>
   );
 }
