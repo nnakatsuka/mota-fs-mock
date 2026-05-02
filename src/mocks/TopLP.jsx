@@ -295,7 +295,7 @@ export default function TopLP() {
                 </div>
               </div>
 
-              {/* 説明文（白い角丸ボックスで囲む） */}
+             {/* 説明文（白い角丸ボックスで囲む） */}
               <div style={{
                 background: "#fff",
                 borderRadius: 12,
@@ -306,10 +306,9 @@ export default function TopLP() {
               }}>
                 <div style={{
                   fontSize: 12, color: TEXT_SUB, lineHeight: 1.8, fontWeight: 600,
-                  textAlign: "center",
+                  textAlign: "left",
                 }}>
-                  職務経歴書も志望動機もいらない。<br/>
-                  Q&A 3問とプロフィール写真だけで、<span style={{
+                  職務経歴書も志望動機もいらない。Q&A 3問とプロフィール写真だけで、<span style={{
                     background: ACCENT_YELLOW, color: NAVY,
                     fontWeight: 800, padding: "1px 5px", borderRadius: 2,
                   }}>正社員</span>のスカウトが届く。
