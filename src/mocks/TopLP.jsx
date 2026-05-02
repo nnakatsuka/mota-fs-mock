@@ -250,42 +250,43 @@ export default function TopLP() {
           <div style={{ flex: 1, overflowY: "auto", background: "#fff" }}>
 
             {/* ===== HERO ===== */}
-            <div style={{
-              padding: "30px 20px 36px",
+           <div style={{
+              padding: "28px 20px 36px",
               background: `linear-gradient(180deg, ${PRIMARY_BG} 0%, #FFFFFF 100%)`,
-              textAlign: "center",
+              textAlign: "left",
             }}>
-              {/* チップ */}
-              <div style={{
-                display: "inline-block",
-                padding: "7px 16px",
-                background: "#fff",
-                border: `1.5px solid ${PRIMARY}`,
-                borderRadius: 18,
-                fontSize: 11, fontWeight: 700,
-                color: PRIMARY_DARK,
-                marginBottom: 20,
-              }}>
-                タイパ重視の「正社員」スカウトプラットフォーム
+              {/* チップ（中央寄せのまま） */}
+              <div style={{ textAlign: "center", marginBottom: 22 }}>
+                <div style={{
+                  display: "inline-block",
+                  padding: "7px 16px",
+                  background: "#fff",
+                  border: `1.5px solid ${PRIMARY}`,
+                  borderRadius: 18,
+                  fontSize: 11, fontWeight: 700,
+                  color: PRIMARY_DARK,
+                }}>
+                  タイパ重視の「正社員」スカウトプラットフォーム
+                </div>
               </div>
 
-              {/* メインキャッチ */}
+              {/* メインキャッチ（左寄せ・大きく） */}
               <div style={{
-                fontSize: 26, fontWeight: 900,
-                lineHeight: 1.5, letterSpacing: -1,
-                marginBottom: 16,
+                fontSize: 28, fontWeight: 900,
+                lineHeight: 1.45, letterSpacing: -1,
+                marginBottom: 18,
               }}>
                 <div style={{
                   color: PRIMARY,
                   marginBottom: 4,
-                  fontSize: 28,
+                  fontSize: 32,
                 }}>
                   履歴書なし。
                 </div>
-                <div style={{ color: NAVY }}>
+                <div style={{ color: NAVY, fontSize: 24 }}>
                   <span style={{ color: PRIMARY_DARK }}>3問</span>のQ&Aと写真だけで、
                 </div>
-                <div style={{ color: NAVY }}>
+                <div style={{ color: NAVY, fontSize: 24 }}>
                   企業から
                   <span style={{
                     background: `linear-gradient(transparent 60%, ${ACCENT_YELLOW} 60%)`,
@@ -294,16 +295,25 @@ export default function TopLP() {
                 </div>
               </div>
 
-              {/* 説明文 */}
+              {/* 説明文（白い角丸ボックスで囲む） */}
               <div style={{
-                fontSize: 12, color: TEXT_SUB, lineHeight: 1.8,
-                marginBottom: 20, fontWeight: 600,
+                background: "#fff",
+                borderRadius: 12,
+                padding: "14px 16px",
+                marginBottom: 22,
+                boxShadow: "0 4px 16px rgba(10,37,64,0.06)",
+                border: `1px solid ${BORDER}`,
               }}>
-                職務経歴書も志望動機もいらない。<br/>
-                Q&A 3問とプロフィール写真だけで、<span style={{
-                  background: ACCENT_YELLOW, color: NAVY,
-                  fontWeight: 800, padding: "1px 5px", borderRadius: 2,
-                }}>正社員</span>のスカウトが届く。
+                <div style={{
+                  fontSize: 12, color: TEXT_SUB, lineHeight: 1.8, fontWeight: 600,
+                  textAlign: "center",
+                }}>
+                  職務経歴書も志望動機もいらない。<br/>
+                  Q&A 3問とプロフィール写真だけで、<span style={{
+                    background: ACCENT_YELLOW, color: NAVY,
+                    fontWeight: 800, padding: "1px 5px", borderRadius: 2,
+                  }}>正社員</span>のスカウトが届く。
+                </div>
               </div>
 
               {/* CTA（赤） */}
