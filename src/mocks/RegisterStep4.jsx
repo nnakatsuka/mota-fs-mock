@@ -314,8 +314,8 @@ export default function RegisterStep4() {
                 fontSize: 10, color: TEXT_MUTE, textAlign: "center",
                 lineHeight: 1.6, marginTop: 16,
               }}>
-                登録ボタンを押すと、<br/>
-                <span style={{ fontWeight: 700 }}>利用規約・プライバシーポリシー</span>に同意したものとみなされます。
+            
+                <a href="#/terms" style={{ color: PRIMARY_DARK, textDecoration: "underline", fontWeight: 700 }}>利用規約</a>・<a href="https://mota.inc/privacy/" target="_blank" rel="noopener noreferrer" style={{ color: PRIMARY_DARK, textDecoration: "underline", fontWeight: 700 }}>プライバシーポリシー</a>に同意の上、登録ください。
               </div>
             </div>
           </div>
