@@ -175,7 +175,7 @@ export default function RegisterStep4() {
   };
 
   // 表示用のデータ整形
-  const birthdayDisplay = s1.birthday
+const birthdayDisplay = s1.birthday && s1.birthday[0] && s1.birthday[1] && s1.birthday[2]
     ? `${s1.birthday[0]}年${s1.birthday[1]}月${s1.birthday[2]}日`
     : "";
   const addressDisplay = s1.address?.pref
