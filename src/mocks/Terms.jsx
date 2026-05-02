@@ -167,9 +167,9 @@ export default function Terms() {
                 fontSize: 10, color: TEXT_MUTE, textAlign: "center",
                 lineHeight: 1.6,
               }}>
-                以上、本規約をご確認の上ご利用ください。<br/>
+                以上、<a href="#/terms" style={{ color: PRIMARY_DARK, textDecoration: "underline", fontWeight: 600 }}>本規約</a>をご確認の上ご利用ください。<br/>
                 ご不明な点は <span style={{
-                  color: PRIMARY_DARK, textDecoration: "underline",
+                  color: PRIMARY_DARK, textDecoration: "underline", cursor: "pointer",
                 }}>お問い合わせ</span> までご連絡ください。
               </div>
             </div>
