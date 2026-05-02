@@ -80,11 +80,12 @@ export default function Layout() {
         style={{
           background: "#fff",
           borderBottom: `1px solid ${BORDER}`,
-          padding: "10px 20px",
+          padding: "8px 16px",
           display: "flex",
-          gap: 8,
-          flexWrap: "wrap",
+          gap: 6,
           overflowX: "auto",
+          scrollbarWidth: "thin",
+          WebkitOverflowScrolling: "touch",
         }}
       >
         {MOCKS.map((m) => {
@@ -93,31 +94,22 @@ export default function Layout() {
             <NavLink
               key={m.path}
               to={m.path}
+              title={m.sub}
               style={{
-                padding: "8px 14px",
-                borderRadius: 8,
-                fontSize: 12,
-                fontWeight: active ? 700 : 500,
+                padding: "6px 12px",
+                borderRadius: 14,
+                fontSize: 11,
+                fontWeight: active ? 700 : 600,
                 color: active ? "#fff" : TEXT_SUB,
                 background: active ? PRIMARY_DARK : "#fff",
                 border: `1px solid ${active ? PRIMARY_DARK : BORDER}`,
                 whiteSpace: "nowrap",
-                lineHeight: 1.3,
-                display: "flex",
-                flexDirection: "column",
+                lineHeight: 1.4,
+                flexShrink: 0,
+                textDecoration: "none",
               }}
             >
-              <span>{m.label}</span>
-              <span
-                style={{
-                  fontSize: 9,
-                  fontWeight: 500,
-                  opacity: active ? 0.85 : 0.6,
-                  marginTop: 1,
-                }}
-              >
-                {m.sub}
-              </span>
+              {m.label}
             </NavLink>
           );
         })}

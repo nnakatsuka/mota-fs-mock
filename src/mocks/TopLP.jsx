@@ -16,13 +16,6 @@ const TEXT = "#0A2540";
 const TEXT_SUB = "#5A6B7C";
 const TEXT_MUTE = "#A0AEC0";
 
-const NUMBERS = [
-  { num: "12万人", label: "登録求職者数" },
-  { num: "8,500件", label: "掲載求人数" },
-  { num: "3日", label: "平均スカウト到着" },
-  { num: "85%", label: "返信率" },
-];
-
 const FEATURES = [
   {
     n: "01",
@@ -206,62 +199,36 @@ export default function TopLP() {
 
           <div style={{ flex: 1, overflowY: "auto", background: "#fff" }}>
 
-            {/* ===== HERO (左寄せ) ===== */}
+            {/* ===== HERO (中央寄せ) ===== */}
             <div style={{
-              padding: "28px 20px 36px",
+              padding: "32px 20px 40px",
               background: `linear-gradient(180deg, #E8F6FD 0%, #FFFFFF 100%)`,
-              textAlign: "left",
-              position: "relative",
-              overflow: "hidden",
+              textAlign: "center",
             }}>
-              {/* 背景の装飾円 */}
-              <div style={{
-                position: "absolute", top: -40, right: -40,
-                width: 180, height: 180, borderRadius: "50%",
-                background: `radial-gradient(circle, ${PRIMARY_LIGHT}55 0%, transparent 70%)`,
-                pointerEvents: "none",
-              }} />
-
               {/* チップ */}
               <div style={{
-                display: "inline-flex", alignItems: "center", gap: 5,
-                padding: "5px 12px",
+                display: "inline-block",
+                padding: "6px 14px",
                 background: "#fff",
-                border: `1px solid ${PRIMARY}55`,
-                borderRadius: 14,
-                fontSize: 10, fontWeight: 700,
-                color: NAVY,
-                marginBottom: 14,
-                position: "relative", zIndex: 1,
+                border: `1.5px solid ${PRIMARY}`,
+                borderRadius: 16,
+                fontSize: 10, fontWeight: 800,
+                color: PRIMARY_DARK,
+                marginBottom: 16,
+                boxShadow: "0 2px 8px rgba(63,182,232,0.15)",
               }}>
-                <span>📷</span>
-                <span>写真と動画で出会う、新しい仕事探し</span>
+                タイパ重視の「正社員」スカウトプラットフォーム
               </div>
-
-              {/* タップミーロゴ（小さめ） */}
-              <img src={logoUrl} alt="タップミー / TAPME"
-                style={{
-                  height: 28, objectFit: "contain",
-                  marginBottom: 14,
-                  display: "block",
-                  position: "relative", zIndex: 1,
-                }} />
 
               {/* メインキャッチ */}
               <div style={{
-                fontSize: 28, fontWeight: 900, color: NAVY,
-                lineHeight: 1.45, letterSpacing: -1,
-                marginBottom: 18,
-                position: "relative", zIndex: 1,
+                fontSize: 22, fontWeight: 900, color: NAVY,
+                lineHeight: 1.5, letterSpacing: -0.5,
+                marginBottom: 12,
               }}>
-                <div style={{ marginBottom: 2 }}>
-                  履歴書、<span style={{ color: PRIMARY_DARK }}>なし。</span>
-                </div>
-                <div style={{ marginBottom: 2 }}>
-                  <span style={{ color: PRIMARY_DARK }}>3問</span>のQ&Aと
-                </div>
-                <div style={{ marginBottom: 2 }}>
-                  写真だけで、
+                <div style={{ color: PRIMARY_DARK, marginBottom: 4 }}>履歴書なし。</div>
+                <div>
+                  <span style={{ fontSize: 26, color: PRIMARY_DARK }}>3問</span>のQ&Aと写真だけで、
                 </div>
                 <div>
                   企業から
@@ -272,51 +239,34 @@ export default function TopLP() {
                 </div>
               </div>
 
-              {/* 白い角丸ボックス */}
+              {/* 説明文 */}
               <div style={{
-                background: "#fff",
-                borderRadius: 12,
-                padding: "12px 14px",
-                marginBottom: 18,
-                boxShadow: "0 4px 16px rgba(10,37,64,0.06)",
-                border: `1px solid ${BORDER}`,
-                position: "relative", zIndex: 1,
+                fontSize: 12, color: TEXT_SUB, lineHeight: 1.7,
+                marginBottom: 20, fontWeight: 600,
               }}>
-                <div style={{
-                  fontSize: 13, color: NAVY, lineHeight: 1.6, fontWeight: 700,
-                  display: "flex", alignItems: "center", gap: 6,
-                }}>
-                  <span style={{ color: PRIMARY_DARK, fontSize: 14 }}>→</span>
-                  <span>
-                    履歴書なしで
-                    <span style={{
-                      background: ACCENT_YELLOW, color: NAVY,
-                      fontWeight: 800, padding: "1px 6px", borderRadius: 3,
-                      margin: "0 2px",
-                    }}>「正社員」</span>
-                    のスカウトが届く
-                  </span>
-                </div>
+                職務経歴書も志望動機もいらない。<br/>
+                Q&A 3問とプロフィール写真だけで、<span style={{
+                  background: ACCENT_YELLOW, color: NAVY,
+                  fontWeight: 800, padding: "1px 4px", borderRadius: 2,
+                }}>正社員</span>のスカウトが届く。
               </div>
 
-              {/* CTA（青） */}
+              {/* CTA（赤） */}
               <button onClick={handleRegister} style={{
-                width: "100%", height: 60,
-                background: `linear-gradient(135deg, ${PRIMARY} 0%, ${PRIMARY_DARK} 100%)`,
-                color: "#fff",
-                border: "none", borderRadius: 30,
+                width: "100%", height: 56,
+                background: CTA, color: "#fff",
+                border: `2px solid ${CTA}`, borderRadius: 28,
                 fontSize: 15, fontWeight: 800, letterSpacing: 0.5,
                 cursor: "pointer",
                 fontFamily: "inherit",
-                boxShadow: "0 8px 24px rgba(63,182,232,0.45)",
-                marginBottom: 12,
+                boxShadow: "0 8px 24px rgba(232,89,60,0.4)",
+                marginBottom: 6,
                 display: "flex", flexDirection: "column",
                 alignItems: "center", justifyContent: "center", gap: 0,
-                position: "relative", zIndex: 1,
               }}>
                 <span>無料で会員登録する ›</span>
                 <span style={{
-                  fontSize: 10, fontWeight: 600, opacity: 0.9, marginTop: 2,
+                  fontSize: 9, fontWeight: 700, opacity: 0.9, marginTop: 2,
                 }}>
                   所要時間 約30秒
                 </span>
@@ -324,58 +274,23 @@ export default function TopLP() {
 
               {/* チェックポイント */}
               <div style={{
-                display: "flex", gap: 12, flexWrap: "wrap",
-                fontSize: 10, fontWeight: 700, color: TEXT_SUB,
-                position: "relative", zIndex: 1,
+                display: "flex", justifyContent: "center", gap: 10,
+                marginTop: 14, flexWrap: "wrap",
               }}>
                 {["完全無料", "履歴書不要", "1分で登録完了"].map(c => (
                   <span key={c} style={{
+                    fontSize: 10, fontWeight: 700, color: TEXT_SUB,
                     display: "flex", alignItems: "center", gap: 3,
                   }}>
-                    <span style={{ color: PRIMARY_DARK, fontWeight: 900 }}>✓</span>
+                    <span style={{ color: SUCCESS }}>✓</span>
                     <span>{c}</span>
                   </span>
                 ))}
               </div>
             </div>
 
-            {/* ===== NUMBERS ===== */}
-            <div style={{ padding: "36px 20px 32px", background: "#fff" }}>
-              <SectionLabel en="NUMBERS" jp="数字で見るタップミー" />
-
-              <div style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: 10,
-                marginTop: 20,
-              }}>
-                {NUMBERS.map((n, i) => (
-                  <div key={i} style={{
-                    background: "#fff",
-                    border: `1px solid ${BORDER}`,
-                    borderRadius: 12,
-                    padding: "16px 12px",
-                    textAlign: "center",
-                    boxShadow: "0 2px 8px rgba(10,37,64,0.04)",
-                  }}>
-                    <div style={{
-                      fontSize: 22, fontWeight: 900, color: PRIMARY_DARK,
-                      letterSpacing: -0.5, lineHeight: 1.2, marginBottom: 4,
-                    }}>
-                      {n.num}
-                    </div>
-                    <div style={{
-                      fontSize: 10, fontWeight: 700, color: TEXT_SUB,
-                    }}>
-                      {n.label}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
             {/* ===== FEATURES ===== */}
-            <div style={{ padding: "36px 20px 32px", background: BG }}>
+            <div style={{ padding: "40px 20px 32px" }}>
               <SectionLabel en="FEATURES" jp="タップミーの3つの特徴" />
 
               {FEATURES.map((f, i) => (
@@ -438,7 +353,10 @@ export default function TopLP() {
             </div>
 
             {/* ===== VOICES ===== */}
-            <div style={{ padding: "32px 20px", background: "#fff" }}>
+            <div style={{
+              padding: "32px 20px",
+              background: "#FAFCFE",
+            }}>
               <SectionLabel en="VOICES" jp="利用者の声" />
 
               {VOICES.map((v, i) => (
@@ -487,8 +405,11 @@ export default function TopLP() {
               ))}
             </div>
 
-            {/* ===== HOW IT WORKS ===== */}
-            <div style={{ padding: "40px 20px", background: NAVY }}>
+            {/* ===== HOW IT WORKS (ネイビー背景) ===== */}
+            <div style={{
+              padding: "40px 20px",
+              background: NAVY,
+            }}>
               <SectionLabel en="HOW IT WORKS" jp="ご利用の流れ" light />
 
               {HOW_IT_WORKS.map((s, i) => (
@@ -533,13 +454,12 @@ export default function TopLP() {
 
               <button onClick={handleRegister} style={{
                 width: "100%", height: 50,
-                background: `linear-gradient(135deg, ${PRIMARY} 0%, ${PRIMARY_DARK} 100%)`,
-                color: "#fff",
-                border: "none", borderRadius: 25,
+                background: CTA, color: "#fff",
+                border: `2px solid ${CTA}`, borderRadius: 25,
                 fontSize: 14, fontWeight: 800, letterSpacing: 0.5,
                 cursor: "pointer",
                 fontFamily: "inherit",
-                boxShadow: "0 6px 18px rgba(63,182,232,0.5)",
+                boxShadow: "0 6px 18px rgba(232,89,60,0.5)",
                 marginTop: 16,
               }}>
                 まずは無料で登録してみる ›
@@ -547,7 +467,7 @@ export default function TopLP() {
             </div>
 
             {/* ===== FAQ ===== */}
-            <div style={{ padding: "40px 20px", background: "#fff" }}>
+            <div style={{ padding: "40px 20px" }}>
               <SectionLabel en="FAQ" jp="よくあるご質問" />
 
               {FAQS.map((faq, i) => {
@@ -639,14 +559,13 @@ export default function TopLP() {
               </div>
 
               <button onClick={handleRegister} style={{
-                width: "100%", height: 60,
-                background: `linear-gradient(135deg, ${PRIMARY} 0%, ${PRIMARY_DARK} 100%)`,
-                color: "#fff",
-                border: "none", borderRadius: 30,
+                width: "100%", height: 56,
+                background: CTA, color: "#fff",
+                border: `2px solid ${CTA}`, borderRadius: 28,
                 fontSize: 16, fontWeight: 800, letterSpacing: 0.5,
                 cursor: "pointer",
                 fontFamily: "inherit",
-                boxShadow: "0 8px 24px rgba(63,182,232,0.45)",
+                boxShadow: "0 8px 24px rgba(232,89,60,0.4)",
                 marginBottom: 6,
                 display: "flex", flexDirection: "column",
                 alignItems: "center", justifyContent: "center", gap: 0,
@@ -664,6 +583,20 @@ export default function TopLP() {
                   color: PRIMARY_DARK, fontWeight: 700, textDecoration: "underline",
                   cursor: "pointer",
                 }}>ログイン</span>
+              </div>
+
+              <div style={{
+                display: "flex", justifyContent: "center", gap: 10,
+                marginTop: 16, flexWrap: "wrap",
+                paddingTop: 12, borderTop: `1px solid ${BORDER}`,
+              }}>
+                {["🔒 SSL暗号化", "💰 完全無料", "📱 アプリ不要"].map(c => (
+                  <span key={c} style={{
+                    fontSize: 10, fontWeight: 700, color: TEXT_SUB,
+                  }}>
+                    {c}
+                  </span>
+                ))}
               </div>
             </div>
 
