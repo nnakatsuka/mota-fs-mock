@@ -568,7 +568,7 @@ export default function Register() {
     name: validate.name(name),
     tel: validate.tel(tel),
     email: validate.email(email),
-    birthday: validate.birthday(),
+    birthday: validate.birthday(birthday),
     address: validate.address(address),
     edu: validate.edu(edu),
     hasCarLicense: validate.hasCarLicense(hasCarLicense),
