@@ -55,7 +55,7 @@ function Phone({ children }) {
   );
 }
 
-function ScoutCard({ scout, onClick, onDetailClick, onMessageClick }) {
+function ScoutCard({ scout, onClick }) {
   const statusStyle = STATUS_LABELS[scout.status];
 
   return (
@@ -81,7 +81,7 @@ function ScoutCard({ scout, onClick, onDetailClick, onMessageClick }) {
         }}>NEW</div>
       )}
 
-      <div style={{ padding: "14px 14px 12px", display: "flex", gap: 12 }}>
+      <div style={{ padding: "14px 14px 14px", display: "flex", gap: 12 }}>
         <div style={{
           width: 48, height: 48, borderRadius: 8,
           background: scout.iconBg,
@@ -151,45 +151,6 @@ function ScoutCard({ scout, onClick, onDetailClick, onMessageClick }) {
         background: statusStyle.bg, color: statusStyle.fg,
       }}>
         {statusStyle.label}
-      </div>
-
-      <div style={{
-        display: "flex",
-        borderTop: `1px solid ${BORDER}`,
-      }}>
-        <button onClick={(e) => { e.stopPropagation(); onDetailClick && onDetailClick(); }} style={{
-          flex: 1, padding: "10px 0",
-          background: "#fff", color: TEXT,
-          border: "none",
-          borderRight: `1px solid ${BORDER}`,
-          fontSize: 11, fontWeight: 700,
-          cursor: "pointer",
-          fontFamily: "inherit",
-          display: "flex", alignItems: "center", justifyContent: "center", gap: 4,
-        }}>
-          <span style={{ fontSize: 12 }}>📋</span>
-          <span style={{ color: PRIMARY_DARK }}>スカウト詳細</span>
-        </button>
-        <button onClick={(e) => { e.stopPropagation(); onMessageClick && onMessageClick(); }} style={{
-          flex: 1, padding: "10px 0",
-          background: "#fff", color: TEXT,
-          border: "none",
-          fontSize: 11, fontWeight: 700,
-          cursor: "pointer",
-          fontFamily: "inherit",
-          display: "flex", alignItems: "center", justifyContent: "center", gap: 4,
-          position: "relative",
-        }}>
-          <span style={{ fontSize: 12 }}>💬</span>
-          <span style={{ color: PRIMARY_DARK }}>メッセージ</span>
-          {scout.isNew && (
-            <span style={{
-              position: "absolute", top: 8, right: 18,
-              width: 7, height: 7, borderRadius: "50%",
-              background: CTA,
-            }} />
-          )}
-        </button>
       </div>
     </div>
   );
@@ -321,9 +282,7 @@ export default function ScoutList() {
             ) : (
               filtered.map(s => (
                 <ScoutCard key={s.id} scout={s}
-                  onClick={() => navigate(`/scout-detail/${s.id}`)}
-                  onDetailClick={() => navigate(`/scout-detail/${s.id}`)}
-                  onMessageClick={() => alert("メッセージ画面へ（モック）")} />
+                  onClick={() => navigate(`/scout-detail/${s.id}`)} />
               ))
             )}
           </div>
