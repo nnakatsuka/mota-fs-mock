@@ -5,6 +5,7 @@ import logoUrl from "../assets/tapme-logo.png";
 const PRIMARY = "#3FB6E8";
 const PRIMARY_DARK = "#059CDB";
 const PRIMARY_LIGHT = "#A9E0F0";
+const PRIMARY_BG = "#E8F6FD";
 const ACCENT_YELLOW = "#F7CF29";
 const CTA = "#E8593C";
 const CTA_DARK = "#C44529";
@@ -16,27 +17,68 @@ const TEXT = "#0A2540";
 const TEXT_SUB = "#5A6B7C";
 const TEXT_MUTE = "#A0AEC0";
 
+// ==========================================================================
+// データ
+// ==========================================================================
+
+// イラスト風アイコン (SVGで再現)
+const FeatureIcon01 = () => (
+  // 書類アイコン (赤・水色のレイヤー)
+  <svg width="46" height="46" viewBox="0 0 46 46" fill="none">
+    <rect x="10" y="6" width="22" height="28" rx="2" fill="#E8593C" opacity="0.85"/>
+    <rect x="13" y="9" width="22" height="28" rx="2" fill="#FFB39B"/>
+    <rect x="16" y="12" width="22" height="28" rx="2" fill="#fff" stroke="#3FB6E8" strokeWidth="1.5"/>
+    <line x1="20" y1="20" x2="33" y2="20" stroke="#3FB6E8" strokeWidth="1.5" strokeLinecap="round"/>
+    <line x1="20" y1="25" x2="33" y2="25" stroke="#3FB6E8" strokeWidth="1.5" strokeLinecap="round"/>
+    <line x1="20" y1="30" x2="29" y2="30" stroke="#3FB6E8" strokeWidth="1.5" strokeLinecap="round"/>
+  </svg>
+);
+
+const FeatureIcon02 = () => (
+  // 吹き出しアイコン (水色)
+  <svg width="46" height="46" viewBox="0 0 46 46" fill="none">
+    <path d="M8 12 Q8 8 12 8 L34 8 Q38 8 38 12 L38 26 Q38 30 34 30 L20 30 L13 36 L13 30 L12 30 Q8 30 8 26 Z"
+      fill="#3FB6E8" opacity="0.25"/>
+    <path d="M11 9 Q11 5 15 5 L37 5 Q41 5 41 9 L41 23 Q41 27 37 27 L23 27 L16 33 L16 27 L15 27 Q11 27 11 23 Z"
+      fill="#fff" stroke="#3FB6E8" strokeWidth="2"/>
+    <circle cx="22" cy="16" r="1.5" fill="#3FB6E8"/>
+    <circle cx="28" cy="16" r="1.5" fill="#3FB6E8"/>
+    <circle cx="34" cy="16" r="1.5" fill="#3FB6E8"/>
+  </svg>
+);
+
+const FeatureIcon03 = () => (
+  // 受信ボックス・矢印アイコン
+  <svg width="46" height="46" viewBox="0 0 46 46" fill="none">
+    <rect x="6" y="22" width="34" height="18" rx="2" fill="#FFB39B"/>
+    <rect x="6" y="22" width="34" height="6" rx="2" fill="#E8593C"/>
+    <path d="M23 8 L23 18 M19 14 L23 18 L27 14"
+      stroke="#3FB6E8" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <rect x="14" y="30" width="18" height="2" rx="1" fill="#fff"/>
+  </svg>
+);
+
 const FEATURES = [
   {
     n: "01",
     title: "履歴書、職務経歴書 不要",
     desc: "面倒な書類作成は一切なし。プロフィール登録は最短30秒で完了します。氏名・住所・経歴は選択式で入力できます。",
-    icon: "📄",
+    Icon: FeatureIcon01,
     chips: ["✓ 書類作成 0分", "✓ 選択式入力で簡単", "✓ 下書き保存OK"],
   },
   {
     n: "02",
     title: "Q&A 3問で自己PR",
-    desc: "ため口でも大丈夫。AIが自動で敬語に変換します。3つの質問に答えるだけで、あなたらしさが企業に伝わります。",
-    icon: "💬",
+    desc: "ため口でも大丈夫。AIが自動で敬語に変換します。志望動機を考えなくても、あなたらしさが企業に伝わります。",
+    Icon: FeatureIcon02,
     chips: ["✓ ため口でOK", "✓ AIが敬語変換", "✓ 修正もカンタン"],
   },
   {
     n: "03",
     title: "企業からスカウトが届く",
     desc: "あなたが応募する手間はなし。プロフィールを見た企業から直接スカウトが届きます。気になる企業だけ返信すればOK。",
-    icon: "📩",
-    chips: ["✓ 待つだけで簡単", "✓ 自社採用でスカウト", "✓ ピンと来たものだけ返信"],
+    Icon: FeatureIcon03,
+    chips: ["✓ 待つだけ採用", "✓ 最短即日でスカウト", "✓ ピンと来たものだけ返信"],
   },
 ];
 
@@ -65,7 +107,7 @@ const VOICES = [
 ];
 
 const HOW_IT_WORKS = [
-  { n: "01", icon: "📝", title: "プロフィール登録", desc: "基本情報とQ&A 3問を入力。AI敬語変換で安心。" },
+  { n: "01", icon: "📝", title: "プロフィール登録", desc: "基本情報とQ&A 3問を入力。AIが敬語に変換。" },
   { n: "02", icon: "📩", title: "スカウト受信", desc: "プロフィールを見た企業からスカウトメッセージがメールで届きます。" },
   { n: "03", icon: "💼", title: "応募・面接", desc: "気になるスカウトに返信。あとは企業と直接やりとりへ。" },
   { n: "04", icon: "🎉", title: "採用・入社", desc: "おめでとうございます！正社員がんばってください！" },
@@ -97,6 +139,10 @@ const FAQS = [
     a: "はい、マイページからいつでも退会できます。退会時にデータも削除されます。",
   },
 ];
+
+// ==========================================================================
+// Phone
+// ==========================================================================
 
 function Phone({ children }) {
   return (
@@ -148,6 +194,10 @@ function SectionLabel({ en, jp, light }) {
   );
 }
 
+// ==========================================================================
+// MAIN
+// ==========================================================================
+
 export default function TopLP() {
   const navigate = useNavigate();
   const [openFaq, setOpenFaq] = useState(0);
@@ -186,7 +236,7 @@ export default function TopLP() {
               src={logoUrl}
               alt="タップミー / TAPME"
               onClick={() => navigate("/")}
-              style={{ height: 38, objectFit: "contain", cursor: "pointer" }}
+              style={{ height: 30, objectFit: "contain", cursor: "pointer" }}
             />
             <button style={{
               padding: "6px 18px",
@@ -199,38 +249,43 @@ export default function TopLP() {
 
           <div style={{ flex: 1, overflowY: "auto", background: "#fff" }}>
 
-            {/* ===== HERO (中央寄せ) ===== */}
+            {/* ===== HERO ===== */}
             <div style={{
-              padding: "32px 20px 40px",
-              background: `linear-gradient(180deg, #E8F6FD 0%, #FFFFFF 100%)`,
+              padding: "30px 20px 36px",
+              background: `linear-gradient(180deg, ${PRIMARY_BG} 0%, #FFFFFF 100%)`,
               textAlign: "center",
             }}>
               {/* チップ */}
               <div style={{
                 display: "inline-block",
-                padding: "6px 14px",
+                padding: "7px 16px",
                 background: "#fff",
                 border: `1.5px solid ${PRIMARY}`,
-                borderRadius: 16,
-                fontSize: 10, fontWeight: 800,
+                borderRadius: 18,
+                fontSize: 11, fontWeight: 700,
                 color: PRIMARY_DARK,
-                marginBottom: 16,
-                boxShadow: "0 2px 8px rgba(63,182,232,0.15)",
+                marginBottom: 20,
               }}>
                 タイパ重視の「正社員」スカウトプラットフォーム
               </div>
 
               {/* メインキャッチ */}
               <div style={{
-                fontSize: 22, fontWeight: 900, color: NAVY,
-                lineHeight: 1.5, letterSpacing: -0.5,
-                marginBottom: 12,
+                fontSize: 26, fontWeight: 900,
+                lineHeight: 1.5, letterSpacing: -1,
+                marginBottom: 16,
               }}>
-                <div style={{ color: PRIMARY_DARK, marginBottom: 4 }}>履歴書なし。</div>
-                <div>
-                  <span style={{ fontSize: 26, color: PRIMARY_DARK }}>3問</span>のQ&Aと写真だけで、
+                <div style={{
+                  color: PRIMARY,
+                  marginBottom: 4,
+                  fontSize: 28,
+                }}>
+                  履歴書なし。
                 </div>
-                <div>
+                <div style={{ color: NAVY }}>
+                  <span style={{ color: PRIMARY_DARK }}>3問</span>のQ&Aと写真だけで、
+                </div>
+                <div style={{ color: NAVY }}>
                   企業から
                   <span style={{
                     background: `linear-gradient(transparent 60%, ${ACCENT_YELLOW} 60%)`,
@@ -241,13 +296,13 @@ export default function TopLP() {
 
               {/* 説明文 */}
               <div style={{
-                fontSize: 12, color: TEXT_SUB, lineHeight: 1.7,
+                fontSize: 12, color: TEXT_SUB, lineHeight: 1.8,
                 marginBottom: 20, fontWeight: 600,
               }}>
                 職務経歴書も志望動機もいらない。<br/>
                 Q&A 3問とプロフィール写真だけで、<span style={{
                   background: ACCENT_YELLOW, color: NAVY,
-                  fontWeight: 800, padding: "1px 4px", borderRadius: 2,
+                  fontWeight: 800, padding: "1px 5px", borderRadius: 2,
                 }}>正社員</span>のスカウトが届く。
               </div>
 
@@ -296,55 +351,64 @@ export default function TopLP() {
               {FEATURES.map((f, i) => (
                 <div key={f.n} style={{
                   background: "#fff", border: `1px solid ${BORDER}`,
-                  borderRadius: 14, padding: "20px 18px",
+                  borderRadius: 16, padding: "20px 18px",
                   marginBottom: 12,
                   boxShadow: "0 4px 16px rgba(10,37,64,0.04)",
                   position: "relative",
                 }}>
+                  {/* 右上の薄水色番号 */}
                   <div style={{
-                    position: "absolute", top: 14, right: 16,
-                    fontSize: 28, fontWeight: 900,
+                    position: "absolute", top: 16, right: 18,
+                    fontSize: 32, fontWeight: 900,
                     color: PRIMARY_LIGHT,
                     fontFamily: "Georgia, serif",
                     letterSpacing: -2,
+                    lineHeight: 1,
                   }}>{f.n}</div>
 
+                  {/* POINTバッジ（水色背景・青字） */}
                   <div style={{
-                    display: "flex", alignItems: "center", gap: 8,
-                    marginBottom: 8, paddingRight: 40,
-                  }}>
-                    <div style={{
-                      fontSize: 9, fontWeight: 800,
-                      color: "#fff", background: PRIMARY_DARK,
-                      padding: "2px 6px", borderRadius: 3,
-                      letterSpacing: 1,
-                    }}>POINT {f.n}</div>
-                  </div>
+                    display: "inline-block",
+                    fontSize: 9, fontWeight: 800,
+                    color: PRIMARY_DARK,
+                    background: PRIMARY_BG,
+                    padding: "3px 10px", borderRadius: 4,
+                    letterSpacing: 1,
+                    marginBottom: 12,
+                  }}>POINT {f.n}</div>
 
+                  {/* タイトル + アイコン (添付ではアイコンが先) */}
                   <div style={{
-                    display: "flex", alignItems: "flex-start", gap: 10, marginBottom: 8,
+                    display: "flex", alignItems: "center", gap: 10, marginBottom: 10,
                   }}>
-                    <div style={{ fontSize: 26, flexShrink: 0 }}>{f.icon}</div>
+                    <div style={{ flexShrink: 0 }}>
+                      <f.Icon />
+                    </div>
                     <div style={{
+                      flex: 1,
                       fontSize: 16, fontWeight: 800, color: NAVY,
-                      lineHeight: 1.4, paddingTop: 2,
+                      lineHeight: 1.4,
                     }}>{f.title}</div>
                   </div>
 
+                  {/* 説明 */}
                   <div style={{
-                    fontSize: 11, color: TEXT_SUB,
-                    lineHeight: 1.7, fontWeight: 600,
-                    marginBottom: 10,
+                    fontSize: 12, color: TEXT_SUB,
+                    lineHeight: 1.8, fontWeight: 600,
+                    marginBottom: 12,
                   }}>
                     {f.desc}
                   </div>
 
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
+                  {/* チップ（水色枠の角丸タグ） */}
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
                     {f.chips.map(c => (
                       <span key={c} style={{
-                        fontSize: 9, fontWeight: 700,
-                        padding: "3px 8px", borderRadius: 10,
-                        background: "#E8F6FD", color: PRIMARY_DARK,
+                        fontSize: 10, fontWeight: 700,
+                        padding: "5px 10px", borderRadius: 14,
+                        background: "#fff",
+                        color: PRIMARY_DARK,
+                        border: `1px solid ${PRIMARY}55`,
                       }}>{c}</span>
                     ))}
                   </div>
@@ -405,7 +469,7 @@ export default function TopLP() {
               ))}
             </div>
 
-            {/* ===== HOW IT WORKS (ネイビー背景) ===== */}
+            {/* ===== HOW IT WORKS ===== */}
             <div style={{
               padding: "40px 20px",
               background: NAVY,
@@ -531,7 +595,7 @@ export default function TopLP() {
             {/* ===== JOIN US ===== */}
             <div style={{
               padding: "40px 20px 32px",
-              background: `linear-gradient(180deg, #FFFFFF 0%, #E8F6FD 100%)`,
+              background: `linear-gradient(180deg, #FFFFFF 0%, ${PRIMARY_BG} 100%)`,
               textAlign: "center",
             }}>
               <div style={{
@@ -584,20 +648,6 @@ export default function TopLP() {
                   cursor: "pointer",
                 }}>ログイン</span>
               </div>
-
-              <div style={{
-                display: "flex", justifyContent: "center", gap: 10,
-                marginTop: 16, flexWrap: "wrap",
-                paddingTop: 12, borderTop: `1px solid ${BORDER}`,
-              }}>
-                {["🔒 SSL暗号化", "💰 完全無料", "📱 アプリ不要"].map(c => (
-                  <span key={c} style={{
-                    fontSize: 10, fontWeight: 700, color: TEXT_SUB,
-                  }}>
-                    {c}
-                  </span>
-                ))}
-              </div>
             </div>
 
             {/* ===== フッター ===== */}
@@ -607,7 +657,7 @@ export default function TopLP() {
             }}>
               <img src={logoUrl} alt="タップミー / TAPME"
                 style={{
-                  height: 32, objectFit: "contain", marginBottom: 16,
+                  height: 28, objectFit: "contain", marginBottom: 16,
                   filter: "brightness(0) invert(1)",
                 }} />
 
