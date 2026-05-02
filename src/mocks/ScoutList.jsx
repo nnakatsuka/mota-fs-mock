@@ -1,191 +1,237 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import logoUrl from "../assets/tapme-logo.png";
 import { SCOUTS } from "../scoutData";
 
-const PRIMARY = "#3FB6E8";
-const PRIMARY_DARK = "#059CDB";
-const ACCENT_YELLOW = "#F7CF29";
-const CTA = "#E8593C";
-const SUCCESS = "#22C39A";
-const NAVY = "#0A2540";
-const BG = "#F4FAFE";
-const BORDER = "#DDE9F0";
-const TEXT = "#0A2540";
-const TEXT_SUB = "#5A6B7C";
-const TEXT_MUTE = "#A0AEC0";
+// ==========================================================================
+// Theme
+// ==========================================================================
+const PRIMARY = "#E8593C";
+const PRIMARY_DARK = "#C44529";
+const PRIMARY_LIGHT = "#FCEFEA";
+const BG = "#F0EFEB";
+const BG_CARD = "#FFFFFF";
+const BORDER = "#E8E6E1";
+const TEXT = "#1a1a1a";
+const TEXT_SUB = "#5F5E5A";
+const TEXT_MUTE = "#B4B2A9";
+const STATUS_APPLIED_BG = "#E0EBF7";
+const STATUS_APPLIED_FG = "#3565AB";
+const STATUS_HIRED_BG = "#E0F2E6";
+const STATUS_HIRED_FG = "#1D7A4D";
+const STATUS_REJECTED_BG = "#F1EFE8";
+const STATUS_REJECTED_FG = "#8C8A82";
 
-const STATUS_LABELS = {
-  scout: { label: "スカウト", bg: "#FFE4DC", fg: CTA },
-  hold: { label: "保留", bg: "#FEF3D6", fg: "#B5832A" },
-  decline: { label: "お断り", bg: "#EEEEEE", fg: TEXT_SUB },
-};
+// ==========================================================================
+// Helpers
+// ==========================================================================
+function statusLabel(appStatus) {
+  if (appStatus === "applied") return { text: "応募済", bg: STATUS_APPLIED_BG, fg: STATUS_APPLIED_FG };
+  if (appStatus === "hired") return { text: "内定", bg: STATUS_HIRED_BG, fg: STATUS_HIRED_FG };
+  if (appStatus === "rejected") return { text: "不採用", bg: STATUS_REJECTED_BG, fg: STATUS_REJECTED_FG };
+  return { text: "-", bg: STATUS_REJECTED_BG, fg: STATUS_REJECTED_FG };
+}
 
-const TABS = [
-  { id: "all", label: "すべて" },
-  { id: "scout", label: "スカウト" },
-  { id: "hold", label: "保留" },
-  { id: "decline", label: "お断り" },
-];
+function sourceLabel(source) {
+  if (source === "scout") {
+    return {
+      text: "スカウト",
+      icon: "📩",
+      bg: PRIMARY_LIGHT,
+      fg: PRIMARY_DARK,
+      border: "#F2C5B6",
+    };
+  }
+  return {
+    text: "自己応募",
+    icon: "✋",
+    bg: "#F1EFE8",
+    fg: TEXT_SUB,
+    border: "#E8E6E1",
+  };
+}
 
-function Phone({ children }) {
+// ==========================================================================
+// Service Logo (タップミー TAPME)
+// ==========================================================================
+function ServiceLogo() {
   return (
-    <div style={{
-      width: 390, height: 800, background: "#fff",
-      borderRadius: 36, border: "8px solid #1a1a1a",
-      overflow: "hidden", display: "flex", flexDirection: "column",
-      boxShadow: "0 24px 80px rgba(10,37,64,0.18), 0 0 0 1px rgba(0,0,0,0.05)",
-      position: "relative",
-      fontFamily: "'Noto Sans JP', 'Hiragino Sans', sans-serif",
-    }}>
-      <div style={{
-        height: 44, background: "#fff", display: "flex",
-        alignItems: "center", justifyContent: "space-between",
-        padding: "0 22px", fontSize: 13, fontWeight: 700, color: TEXT, flexShrink: 0,
-      }}>
-        <span>9:41</span>
-        <div style={{ width: 120, height: 28, background: "#1a1a1a", borderRadius: 14 }} />
-        <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
-          <svg width="16" height="12" viewBox="0 0 16 12"><rect x="0" y="6" width="3" height="6" rx="1" fill="#1a1a1a"/><rect x="4.5" y="4" width="3" height="8" rx="1" fill="#1a1a1a"/><rect x="9" y="2" width="3" height="10" rx="1" fill="#1a1a1a"/><rect x="13.5" y="0" width="3" height="12" rx="1" fill="#1a1a1a"/></svg>
-          <svg width="22" height="12" viewBox="0 0 22 12"><rect x="0" y="0" width="20" height="12" rx="2" stroke="#1a1a1a" strokeWidth="1" fill="none"/><rect x="1.5" y="1.5" width="14" height="9" rx="1" fill="#1a1a1a"/><rect x="21" y="3.5" width="1.5" height="5" rx="0.5" fill="#1a1a1a"/></svg>
-        </div>
-      </div>
-      {children}
+    <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
+      <span style={{ fontSize: 18, fontWeight: 800, color: PRIMARY, letterSpacing: 0.5 }}>
+        タッ<span style={{ fontSize: 22, color: PRIMARY_DARK }}>プ</span>ミー
+      </span>
+      <span style={{ fontSize: 11, fontWeight: 600, color: TEXT_SUB, letterSpacing: 1 }}>
+        TAPME
+      </span>
     </div>
   );
 }
 
-function ScoutCard({ scout, onClick, onDetailClick, onMessageClick }) {
-  const statusStyle = STATUS_LABELS[scout.status];
+// ==========================================================================
+// Scout Card
+// ==========================================================================
+function ScoutCard({ scout, onClick }) {
+  const status = statusLabel(scout.appStatus);
+  const src = sourceLabel(scout.source);
 
   return (
-    <div onClick={onClick} style={{
-      background: "#fff", borderRadius: 14,
-      marginBottom: 10,
-      border: `1px solid ${BORDER}`,
-      cursor: "pointer",
-      transition: "transform 0.12s, box-shadow 0.12s",
-      position: "relative",
-      overflow: "hidden",
-    }}
-    onMouseEnter={e => e.currentTarget.style.boxShadow = "0 4px 16px rgba(10,37,64,0.1)"}
-    onMouseLeave={e => e.currentTarget.style.boxShadow = "none"}>
-      {scout.isNew && (
+    <div
+      onClick={onClick}
+      style={{
+        background: BG_CARD,
+        borderRadius: 12,
+        border: `1px solid ${BORDER}`,
+        marginBottom: 12,
+        cursor: "pointer",
+        overflow: "hidden",
+        position: "relative",
+        transition: "all 0.15s",
+      }}
+    >
+      {/* 上部 source ラベル */}
+      <div style={{
+        display: "flex",
+        alignItems: "center",
+        padding: "8px 12px 0 12px",
+      }}>
         <div style={{
-          position: "absolute", top: 0, right: 0,
-          background: CTA, color: "#fff",
-          fontSize: 9, fontWeight: 900, letterSpacing: 1,
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 4,
           padding: "3px 10px",
-          borderBottomLeftRadius: 8,
-          boxShadow: "0 2px 6px rgba(232,89,60,0.3)",
-        }}>NEW</div>
-      )}
-
-      <div style={{ padding: "14px 14px 12px", display: "flex", gap: 12 }}>
-        <div style={{
-          width: 48, height: 48, borderRadius: 8,
-          background: scout.iconBg,
-          display: "flex", alignItems: "center", justifyContent: "center",
-          fontSize: 11, fontWeight: 700, color: scout.iconColor,
-          flexShrink: 0,
-          border: `1px solid ${BORDER}`,
+          background: src.bg,
+          color: src.fg,
+          border: `1px solid ${src.border}`,
+          borderRadius: 12,
+          fontSize: 11,
+          fontWeight: 700,
+          letterSpacing: 0.3,
         }}>
-          ロゴ
+          <span style={{ fontSize: 11 }}>{src.icon}</span>
+          <span>{src.text}</span>
+        </div>
+        {scout.isNew && (
+          <div style={{
+            marginLeft: 8,
+            padding: "2px 8px",
+            background: PRIMARY,
+            color: "#fff",
+            borderRadius: 10,
+            fontSize: 10,
+            fontWeight: 700,
+            letterSpacing: 0.5,
+          }}>
+            NEW
+          </div>
+        )}
+      </div>
+
+      {/* 本体 */}
+      <div style={{ padding: "10px 14px 14px 14px", display: "flex", gap: 12 }}>
+        {/* ロゴ枠 */}
+        <div style={{
+          width: 56, height: 56, borderRadius: 8,
+          background: scout.iconBg,
+          color: scout.iconColor,
+          display: "flex", alignItems: "center", justifyContent: "center",
+          fontSize: 26, flexShrink: 0,
+        }}>
+          {scout.icon}
         </div>
 
-        <div style={{ flex: 1, minWidth: 0, paddingRight: 30 }}>
-          {/* 職種（上・大きい・青リンク） */}
+        {/* 情報 */}
+        <div style={{ flex: 1, minWidth: 0 }}>
+          {/* 会社名（上・大）+ ステータスバッジ */}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 8 }}>
+            <div style={{
+              fontSize: 15, fontWeight: 700, color: "#3565AB",
+              lineHeight: 1.3, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
+            }}>
+              {scout.company}
+            </div>
+            <div style={{
+              flexShrink: 0,
+              padding: "3px 10px",
+              background: status.bg, color: status.fg,
+              borderRadius: 12, fontSize: 10, fontWeight: 700,
+              whiteSpace: "nowrap",
+            }}>
+              {status.text}
+            </div>
+          </div>
+
+          {/* 職種（下・小） */}
           <div style={{
-            fontSize: 14, fontWeight: 800,
-            color: PRIMARY_DARK, marginBottom: 2,
-            textDecoration: "underline",
-            textDecorationColor: PRIMARY_DARK + "55",
+            fontSize: 13, color: TEXT_SUB, marginTop: 2,
             overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
-            lineHeight: 1.3,
           }}>
-            {scout.jobTitle}
-          </div>
-          {/* 会社名・場所（下・小さい・グレー） */}
-          <div style={{
-            fontSize: 11, color: TEXT_SUB, fontWeight: 600,
-            marginBottom: 8, lineHeight: 1.4,
-          }}>
-            {scout.company}・{scout.location}
+            {scout.jobTitle}・{scout.location}
           </div>
 
-          <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+          {/* 年収・休日バッジ */}
+          <div style={{ display: "flex", gap: 6, marginTop: 8, flexWrap: "wrap" }}>
             <div style={{
-              fontSize: 10, fontWeight: 700,
-              padding: "3px 8px", borderRadius: 3,
-              background: "#FFF3F0", color: CTA,
-              display: "flex", alignItems: "center", gap: 4,
+              display: "inline-flex", alignItems: "center", gap: 4,
+              padding: "3px 8px", background: PRIMARY_LIGHT,
+              borderRadius: 4, fontSize: 11,
             }}>
               <span style={{
-                fontSize: 8, padding: "0 4px",
-                background: CTA, color: "#fff", borderRadius: 2,
+                background: PRIMARY, color: "#fff",
+                padding: "1px 5px", borderRadius: 3,
+                fontSize: 10, fontWeight: 700,
               }}>年収</span>
-              {scout.salaryMin}〜{scout.salaryMax}万
+              <span style={{ fontWeight: 700, color: TEXT }}>
+                {scout.salaryMin}〜{scout.salaryMax}万
+              </span>
             </div>
             <div style={{
-              fontSize: 10, fontWeight: 700,
-              padding: "3px 8px", borderRadius: 3,
-              background: "#E8F6FD", color: PRIMARY_DARK,
-              display: "flex", alignItems: "center", gap: 4,
+              display: "inline-flex", alignItems: "center", gap: 4,
+              padding: "3px 8px", background: "#EAF4EE",
+              borderRadius: 4, fontSize: 11,
             }}>
               <span style={{
-                fontSize: 8, padding: "0 4px",
-                background: PRIMARY_DARK, color: "#fff", borderRadius: 2,
+                background: "#1D9E75", color: "#fff",
+                padding: "1px 5px", borderRadius: 3,
+                fontSize: 10, fontWeight: 700,
               }}>休日</span>
-              {scout.holidays}日
+              <span style={{ fontWeight: 700, color: TEXT }}>
+                {scout.holidays}日
+              </span>
             </div>
           </div>
         </div>
       </div>
-
-      <div style={{
-        position: "absolute",
-        top: scout.isNew ? 28 : 14,
-        right: 14,
-        fontSize: 10, fontWeight: 800,
-        padding: "4px 12px", borderRadius: 4,
-        background: statusStyle.bg, color: statusStyle.fg,
-      }}>
-        {statusStyle.label}
-      </div>
-
-      
     </div>
   );
 }
 
-function BottomNav({ activeTab = "scout" }) {
-  const items = [
-    { id: "search", icon: "🔍", label: "求人検索" },
-    { id: "scout", icon: "📩", label: "スカウト" },
-    { id: "applied", icon: "📝", label: "応募" },
-    { id: "mypage", icon: "👤", label: "マイページ" },
+// ==========================================================================
+// Bottom Nav
+// ==========================================================================
+function BottomNav({ activeTab }) {
+  const tabs = [
+    { id: "search", label: "求人検索", icon: "🔍" },
+    { id: "scout", label: "スカウト", icon: "📩" },
+    { id: "applied", label: "応募", icon: "📋" },
+    { id: "fav", label: "気になる", icon: "♡" },
+    { id: "msg", label: "メッセージ", icon: "💬" },
   ];
-  
   return (
     <div style={{
-      borderTop: `1px solid ${BORDER}`,
-      background: "#fff", padding: "6px 0 4px",
-      display: "flex", justifyContent: "space-around",
+      height: 56, background: "#fff",
+      display: "flex", borderTop: `1px solid ${BORDER}`,
       flexShrink: 0,
     }}>
-      {items.map(it => {
-        const active = it.id === activeTab;
+      {tabs.map(t => {
+        const active = t.id === activeTab;
         return (
-          <div key={it.id} style={{
-            display: "flex", flexDirection: "column", alignItems: "center",
-            cursor: "pointer", padding: "4px 8px",
+          <div key={t.id} style={{
+            flex: 1, display: "flex", flexDirection: "column",
+            alignItems: "center", justifyContent: "center", gap: 2,
+            cursor: "pointer",
+            color: active ? PRIMARY : TEXT_MUTE,
           }}>
-            <span style={{ fontSize: 18, opacity: active ? 1 : 0.5 }}>{it.icon}</span>
-            <span style={{
-              fontSize: 9, fontWeight: 700,
-              color: active ? PRIMARY_DARK : TEXT_MUTE,
-              marginTop: 2,
-            }}>{it.label}</span>
+            <span style={{ fontSize: 18 }}>{t.icon}</span>
+            <span style={{ fontSize: 10, fontWeight: active ? 700 : 500 }}>{t.label}</span>
           </div>
         );
       })}
@@ -193,107 +239,164 @@ function BottomNav({ activeTab = "scout" }) {
   );
 }
 
+// ==========================================================================
+// Phone frame
+// ==========================================================================
+function Phone({ children }) {
+  return (
+    <div style={{
+      width: 375, minHeight: 720, maxHeight: 780,
+      background: BG,
+      borderRadius: 36, border: "6px solid #1a1a1a",
+      overflow: "hidden", display: "flex", flexDirection: "column",
+      boxShadow: "0 20px 60px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.05)",
+      position: "relative",
+      fontFamily: "'Noto Sans JP', 'Hiragino Sans', sans-serif",
+    }}>
+      {/* Status bar */}
+      <div style={{
+        height: 44, background: "#fff", display: "flex",
+        alignItems: "center", justifyContent: "space-between",
+        padding: "0 20px", fontSize: 12, fontWeight: 600, color: TEXT,
+        flexShrink: 0,
+      }}>
+        <span>9:41</span>
+        <div style={{ width: 120, height: 28, background: "#1a1a1a", borderRadius: 14 }} />
+        <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
+          <svg width="16" height="12" viewBox="0 0 16 12">
+            <rect x="0" y="6" width="3" height="6" rx="1" fill="#1a1a1a"/>
+            <rect x="4.5" y="4" width="3" height="8" rx="1" fill="#1a1a1a"/>
+            <rect x="9" y="2" width="3" height="10" rx="1" fill="#1a1a1a"/>
+            <rect x="13.5" y="0" width="3" height="12" rx="1" fill="#1a1a1a" opacity="0.3"/>
+          </svg>
+          <svg width="22" height="12" viewBox="0 0 22 12">
+            <rect x="0" y="0" width="20" height="12" rx="2" stroke="#1a1a1a" strokeWidth="1" fill="none"/>
+            <rect x="1.5" y="1.5" width="14" height="9" rx="1" fill="#1a1a1a"/>
+            <rect x="21" y="3.5" width="1.5" height="5" rx="0.5" fill="#1a1a1a"/>
+          </svg>
+        </div>
+      </div>
+      <div style={{ flex: 1, overflow: "hidden", display: "flex", flexDirection: "column" }}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+// ==========================================================================
+// Main: ScoutList
+// ==========================================================================
 export default function ScoutList() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("all");
 
-  const filtered = activeTab === "all"
-    ? SCOUTS
-    : SCOUTS.filter(s => s.status === activeTab);
-
+  // 各タブのカウント
   const counts = {
     all: SCOUTS.length,
-    scout: SCOUTS.filter(s => s.status === "scout").length,
-    hold: SCOUTS.filter(s => s.status === "hold").length,
-    decline: SCOUTS.filter(s => s.status === "decline").length,
+    applied: SCOUTS.filter(s => s.appStatus === "applied").length,
+    result: SCOUTS.filter(s => s.appStatus === "hired" || s.appStatus === "rejected").length,
+  };
+
+  // 表示用フィルタリング
+  const filtered = activeTab === "all"
+    ? SCOUTS
+    : activeTab === "applied"
+      ? SCOUTS.filter(s => s.appStatus === "applied")
+      : SCOUTS.filter(s => s.appStatus === "hired" || s.appStatus === "rejected");
+
+  const tabs = [
+    { id: "all", label: "すべて", count: counts.all },
+    { id: "applied", label: "応募済", count: counts.applied },
+    { id: "result", label: "結果", count: counts.result },
+  ];
+
+  // タップ時の遷移先分岐
+  const handleCardClick = (scout) => {
+    if (scout.source === "scout") {
+      navigate(`/scout-detail/${scout.id}`);
+    } else {
+      navigate(`/job-detail`);
+    }
   };
 
   return (
     <div style={{
-      minHeight: "100vh", background: BG, padding: "20px 0 40px",
-      fontFamily: "'Noto Sans JP', 'Hiragino Sans', sans-serif",
-      display: "flex", justifyContent: "center",
+      minHeight: "100vh", background: BG, padding: "20px 0",
+      display: "flex", justifyContent: "center", alignItems: "flex-start",
     }}>
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
-        <div style={{ textAlign: "center", maxWidth: 600, padding: "0 20px" }}>
+      <Phone>
+        {/* Header: タップミー TAPME ロゴ */}
+        <div style={{
+          height: 52, background: "#fff",
+          borderBottom: `1px solid ${BORDER}`,
+          display: "flex", alignItems: "center", justifyContent: "space-between",
+          padding: "0 16px", flexShrink: 0,
+        }}>
+          <ServiceLogo />
           <div style={{
-            display: "inline-block", padding: "4px 12px",
-            background: NAVY, color: "#fff", fontSize: 10,
-            fontWeight: 700, borderRadius: 4, letterSpacing: 1, marginBottom: 8,
-          }}>F/S MOCK — D-1 スカウト一覧</div>
-          <div style={{ fontSize: 13, color: TEXT_SUB, lineHeight: 1.6 }}>
-            ログイン後 / メインアプリ<br/>
-            <span style={{ fontSize: 11, color: TEXT_MUTE }}>
-              ※スカウトを受信した状態のリスト
-            </span>
+            width: 28, height: 28, display: "flex",
+            flexDirection: "column", justifyContent: "center", gap: 4,
+            cursor: "pointer",
+          }}>
+            <div style={{ height: 2, background: TEXT, borderRadius: 1 }} />
+            <div style={{ height: 2, background: TEXT, borderRadius: 1 }} />
+            <div style={{ height: 2, background: TEXT, borderRadius: 1 }} />
           </div>
         </div>
 
-        <Phone>
-         <div style={{
-            height: 56, background: "#fff", borderBottom: `1px solid ${BORDER}`,
-            display: "flex", alignItems: "center", justifyContent: "space-between",
-            padding: "0 16px", flexShrink: 0,
-          }}>
-            <img
-              src={logoUrl}
-              alt="タップミー / TAPME"
-              onClick={() => navigate("/")}
-              style={{ height: 40, objectFit: "contain", cursor: "pointer" }}
-            />
-            <span style={{ fontSize: 18, color: TEXT_SUB, cursor: "pointer" }}>☰</span>
-          </div>
-          
-          <div style={{
-            display: "flex", padding: "0 8px", background: "#fff",
-            borderBottom: `1px solid ${BORDER}`, flexShrink: 0,
-            overflowX: "auto",
-          }}>
-            {TABS.map(t => {
-              const active = t.id === activeTab;
-              const count = counts[t.id];
-              return (
-                <div key={t.id} onClick={() => setActiveTab(t.id)} style={{
-                  flex: 1, padding: "12px 8px", textAlign: "center",
-                  fontSize: 12, fontWeight: active ? 800 : 600,
+        {/* Tabs: すべて / 応募済 / 結果 */}
+        <div style={{
+          display: "flex", background: "#fff",
+          borderBottom: `1px solid ${BORDER}`,
+          flexShrink: 0,
+        }}>
+          {tabs.map(t => {
+            const active = t.id === activeTab;
+            return (
+              <div
+                key={t.id}
+                onClick={() => setActiveTab(t.id)}
+                style={{
+                  flex: 1, padding: "12px 0", textAlign: "center",
+                  fontSize: 13, fontWeight: active ? 800 : 600,
                   color: active ? PRIMARY_DARK : TEXT_SUB,
                   borderBottom: `3px solid ${active ? PRIMARY : "transparent"}`,
                   cursor: "pointer", whiteSpace: "nowrap",
                   display: "flex", alignItems: "center", justifyContent: "center", gap: 4,
+                }}
+              >
+                <span>{t.label}</span>
+                <span style={{
+                  fontSize: 10, fontWeight: 700,
+                  background: active ? PRIMARY : "#E0E6EC",
+                  color: active ? "#fff" : TEXT_SUB,
+                  padding: "1px 6px", borderRadius: 8, minWidth: 16, textAlign: "center",
                 }}>
-                  <span>{t.label}</span>
-                  <span style={{
-                    fontSize: 10, fontWeight: 700,
-                    background: active ? PRIMARY : "#E0E6EC",
-                    color: active ? "#fff" : TEXT_SUB,
-                    padding: "1px 6px", borderRadius: 8, minWidth: 16, textAlign: "center",
-                  }}>{count}</span>
-                </div>
-              );
-            })}
-          </div>
-
-          <div style={{ flex: 1, overflowY: "auto", background: BG, padding: "12px 12px" }}>
-            {filtered.length === 0 ? (
-              <div style={{
-                textAlign: "center", padding: "60px 20px",
-                color: TEXT_MUTE, fontSize: 12,
-              }}>
-                該当するスカウトはありません
+                  {t.count}
+                </span>
               </div>
-            ) : (
-              filtered.map(s => (
-                <ScoutCard key={s.id} scout={s}
-                  onClick={() => navigate(`/scout-detail/${s.id}`)}
-                  onDetailClick={() => navigate(`/scout-detail/${s.id}`)}
-                  onMessageClick={() => alert("メッセージ画面へ（モック）")} />
-              ))
-            )}
-          </div>
+            );
+          })}
+        </div>
 
-          <BottomNav activeTab="scout" />
-        </Phone>
-      </div>
+        {/* Card list */}
+        <div style={{ flex: 1, overflowY: "auto", background: BG, padding: "12px 12px" }}>
+          {filtered.length === 0 ? (
+            <div style={{
+              textAlign: "center", padding: "60px 20px",
+              color: TEXT_MUTE, fontSize: 12,
+            }}>
+              該当するスカウトはありません
+            </div>
+          ) : (
+            filtered.map(s => (
+              <ScoutCard key={s.id} scout={s} onClick={() => handleCardClick(s)} />
+            ))
+          )}
+        </div>
+
+        <BottomNav activeTab="scout" />
+      </Phone>
     </div>
   );
 }
