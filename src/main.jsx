@@ -8,6 +8,11 @@ import RegisterStep2 from "./mocks/RegisterStep2.jsx";
 import RegisterStep3 from "./mocks/RegisterStep3.jsx";
 import RegisterStep4 from "./mocks/RegisterStep4.jsx";
 import RegisterComplete from "./mocks/RegisterComplete.jsx";
+import LoginRequired from "./mocks/LoginRequired.jsx";
+import MyPage from "./mocks/MyPage.jsx";
+import ProfileEdit from "./mocks/ProfileEdit.jsx";
+import Terms from "./mocks/Terms.jsx";
+import Withdraw from "./mocks/Withdraw.jsx";
 import ScoutList from "./mocks/ScoutList.jsx";
 import ScoutDetail from "./mocks/ScoutDetail.jsx";
 import AppliedList from "./mocks/AppliedList.jsx";
@@ -27,6 +32,11 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="/register-step3" element={<RegisterStep3 />} />
           <Route path="/register-step4" element={<RegisterStep4 />} />
           <Route path="/register-complete" element={<RegisterComplete />} />
+          <Route path="/login-required" element={<LoginRequired />} />
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/profile-edit" element={<ProfileEdit />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/withdraw" element={<Withdraw />} />
           <Route path="/scout-list" element={<ScoutList />} />
           <Route path="/scout-detail/:id" element={<ScoutDetail />} />
           <Route path="/scout-detail" element={<ScoutDetail />} />

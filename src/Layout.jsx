@@ -15,12 +15,17 @@ const MOCKS = [
   { path: "/register-step3",     label: "B-3 登録 STEP3",        sub: "顔写真" },
   { path: "/register-step4",     label: "B-4 登録 STEP4",        sub: "確認画面" },
   { path: "/register-complete",  label: "B-5 登録完了",           sub: "ウェルカム" },
+  { path: "/login-required",     label: "C-1 ログイン要求",        sub: "未登録ユーザー向け" },
+  { path: "/mypage",             label: "C-2 マイページ",          sub: "プロフィール・設定" },
+  { path: "/profile-edit",       label: "C-3 プロフィール編集",    sub: "アコーディオンで編集" },
+  { path: "/terms",              label: "C-4 利用規約",           sub: "規約全文" },
+  { path: "/withdraw",           label: "C-5 退会確認",           sub: "退会前の最終確認" },
   { path: "/scout-list",         label: "D-1 スカウト一覧",       sub: "ログイン後・タブ切替" },
   { path: "/scout-detail",       label: "D-2 スカウト詳細",       sub: "メッセージ・追従ボタン" },
   { path: "/applied-complete",   label: "D-3 応募完了",          sub: "応募後の案内画面" },
   { path: "/applied-list",       label: "D-4 応募一覧",          sub: "応募タブ" },
-  { path: "/job-detail",         label: "D-5 求人詳細",          sub: "PRポイント・社員の声" },
   { path: "/job-list",           label: "E-1 求人一覧",          sub: "検索・並び替え・絞り込み" },
+  { path: "/job-detail",         label: "E-2 求人詳細",          sub: "PRポイント・社員の声" },
 ];
 
 export default function Layout() {
