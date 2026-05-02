@@ -7,6 +7,7 @@
 export const SCOUTS = [
   {
     id: "scout_001",
+    source: "scout",     // ← この行を追加
     company: "サンプル建設",
     industry: "建設業",
     jobTitle: "施工管理スタッフ",
@@ -44,6 +45,7 @@ export const SCOUTS = [
   },
   {
     id: "scout_002",
+    source: "scout",     // ← この行を追加
     company: "ABC歯科クリニック",
     industry: "医療・歯科",
     jobTitle: "歯科助手",
@@ -81,6 +83,7 @@ export const SCOUTS = [
   },
   {
     id: "scout_003",
+    source: "scout",     // ← この行を追加
     company: "ヤマト運輸",
     industry: "運輸・物流",
     jobTitle: "配送スタッフ・乗務員",
@@ -118,6 +121,7 @@ export const SCOUTS = [
   },
   {
     id: "scout_004",
+    source: "scout",     // ← この行を追加
     company: "Fashion MOTA",
     industry: "アパレル販売",
     jobTitle: "販売スタッフ・東京都板橋区",
@@ -155,6 +159,7 @@ export const SCOUTS = [
   },
   {
     id: "scout_005",
+    source: "scout",     // ← この行を追加
     company: "車買取センター東京",
     industry: "車買取",
     jobTitle: "買取査定スタッフ",
@@ -192,6 +197,7 @@ export const SCOUTS = [
   },
   {
     id: "scout_006",
+    source: "scout",     // ← この行を追加
     company: "ケアサポート神奈川",
     industry: "介護",
     jobTitle: "介護スタッフ",
