@@ -678,9 +678,8 @@ export default function Register() {
                   <OtherLicenseInput value={otherLicense} onChange={setOtherLicense} />
                 </div>
               </div>
-              <div style={{ fontSize: 10, color: TEXT_MUTE, textAlign: "center", lineHeight: 1.6, marginTop: 8 }}>
-                登録情報は厳重に管理されます。<br/>
-                利用規約・プライバシーポリシーに同意の上ご登録ください。
+            <div style={{ fontSize: 10, color: TEXT_MUTE, textAlign: "center", lineHeight: 1.6, marginTop: 8 }}>
+                登録ボタンを押すと、<a href="#/terms" style={{ color: PRIMARY_DARK, textDecoration: "underline", fontWeight: 600 }}>利用規約</a>・<a href="https://mota.inc/privacy/" target="_blank" rel="noopener noreferrer" style={{ color: PRIMARY_DARK, textDecoration: "underline", fontWeight: 600 }}>プライバシーポリシー</a>に同意したものとみなされます。
               </div>
             </div>
           </div>
