@@ -1,14 +1,26 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logoUrl from "../assets/tapme-logo.png";
+import heroWorker from "../assets/hero-worker.png";
+import bottomWoman from "../assets/bottom-woman.png";
+import feature01 from "../assets/feature-01.svg";
+import feature02 from "../assets/feature-02.svg";
+import feature03 from "../assets/feature-03.svg";
+import voice01 from "../assets/voice-01.svg";
+import voice02 from "../assets/voice-02.svg";
+import voice03 from "../assets/voice-03.svg";
 
+// ==========================================================================
+// Theme (Figma準拠)
+// ==========================================================================
 const PRIMARY = "#3FB6E8";
 const PRIMARY_DARK = "#059CDB";
 const PRIMARY_LIGHT = "#A9E0F0";
 const PRIMARY_BG = "#E8F6FD";
+const HERO_BG = "#C5E5EE";          // Figmaのヒーロー背景ライトブルー（仮値）
+const HOW_BG = "#E8F6FD";           // HOW IT WORKS背景もライトブルー基調に
 const ACCENT_YELLOW = "#F7CF29";
 const CTA = "#E8593C";
-const CTA_DARK = "#C44529";
 const SUCCESS = "#22C39A";
 const NAVY = "#0A2540";
 const BG = "#F4FAFE";
@@ -21,63 +33,26 @@ const TEXT_MUTE = "#A0AEC0";
 // データ
 // ==========================================================================
 
-// イラスト風アイコン (SVGで再現)
-const FeatureIcon01 = () => (
-  // 書類アイコン (赤・水色のレイヤー)
-  <svg width="46" height="46" viewBox="0 0 46 46" fill="none">
-    <rect x="10" y="6" width="22" height="28" rx="2" fill="#E8593C" opacity="0.85"/>
-    <rect x="13" y="9" width="22" height="28" rx="2" fill="#FFB39B"/>
-    <rect x="16" y="12" width="22" height="28" rx="2" fill="#fff" stroke="#3FB6E8" strokeWidth="1.5"/>
-    <line x1="20" y1="20" x2="33" y2="20" stroke="#3FB6E8" strokeWidth="1.5" strokeLinecap="round"/>
-    <line x1="20" y1="25" x2="33" y2="25" stroke="#3FB6E8" strokeWidth="1.5" strokeLinecap="round"/>
-    <line x1="20" y1="30" x2="29" y2="30" stroke="#3FB6E8" strokeWidth="1.5" strokeLinecap="round"/>
-  </svg>
-);
-
-const FeatureIcon02 = () => (
-  // 吹き出しアイコン (水色)
-  <svg width="46" height="46" viewBox="0 0 46 46" fill="none">
-    <path d="M8 12 Q8 8 12 8 L34 8 Q38 8 38 12 L38 26 Q38 30 34 30 L20 30 L13 36 L13 30 L12 30 Q8 30 8 26 Z"
-      fill="#3FB6E8" opacity="0.25"/>
-    <path d="M11 9 Q11 5 15 5 L37 5 Q41 5 41 9 L41 23 Q41 27 37 27 L23 27 L16 33 L16 27 L15 27 Q11 27 11 23 Z"
-      fill="#fff" stroke="#3FB6E8" strokeWidth="2"/>
-    <circle cx="22" cy="16" r="1.5" fill="#3FB6E8"/>
-    <circle cx="28" cy="16" r="1.5" fill="#3FB6E8"/>
-    <circle cx="34" cy="16" r="1.5" fill="#3FB6E8"/>
-  </svg>
-);
-
-const FeatureIcon03 = () => (
-  // 受信ボックス・矢印アイコン
-  <svg width="46" height="46" viewBox="0 0 46 46" fill="none">
-    <rect x="6" y="22" width="34" height="18" rx="2" fill="#FFB39B"/>
-    <rect x="6" y="22" width="34" height="6" rx="2" fill="#E8593C"/>
-    <path d="M23 8 L23 18 M19 14 L23 18 L27 14"
-      stroke="#3FB6E8" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-    <rect x="14" y="30" width="18" height="2" rx="1" fill="#fff"/>
-  </svg>
-);
-
 const FEATURES = [
   {
     n: "01",
     title: "履歴書、職務経歴書 不要",
     desc: "面倒な書類作成は一切なし。プロフィール登録は最短30秒で完了します。氏名・住所・経歴は選択式で入力できます。",
-    Icon: FeatureIcon01,
+    img: feature01,
     chips: ["✓ 書類作成 0分", "✓ 選択式入力で簡単", "✓ 下書き保存OK"],
   },
   {
     n: "02",
     title: "Q&A 3問で自己PR",
     desc: "ため口でも大丈夫。AIが自動で敬語に変換します。志望動機を考えなくても、あなたらしさが企業に伝わります。",
-    Icon: FeatureIcon02,
+    img: feature02,
     chips: ["✓ ため口でOK", "✓ AIが敬語変換", "✓ 修正もカンタン"],
   },
   {
     n: "03",
     title: "企業からスカウトが届く",
     desc: "あなたが応募する手間はなし。プロフィールを見た企業から直接スカウトが届きます。気になる企業だけ返信すればOK。",
-    Icon: FeatureIcon03,
+    img: feature03,
     chips: ["✓ 待つだけ採用", "✓ 最短即日でスカウト", "✓ ピンと来たものだけ返信"],
   },
 ];
@@ -87,21 +62,21 @@ const VOICES = [
     name: "20代女性 / 飲食",
     title: "履歴書を書かずに済んだ",
     content: "前職を辞めてから3社の転職サービスを使ったけど、履歴書も職務経歴書も書かなくていいのはタップミーだけ。Q&Aもため口でOKで、AIが自動で敬語に直してくれるからラクでした。",
-    avatar: "👩",
+    avatar: voice01,
     rating: 5,
   },
   {
     name: "30代男性 / 介護",
     title: "登録3日で5件のスカウト",
     content: "プロフィール写真と動画を載せたら、登録した翌日からスカウトが3件来ました。自分から応募しなくても何社かから来てくれるので応募の手間が省けるし、選考もスムーズでした。",
-    avatar: "👨",
+    avatar: voice02,
     rating: 5,
   },
   {
     name: "20代女性 / 小売",
     title: "人柄を見てもらえた",
     content: "学歴やスキルだけで判断されるのが嫌だったけど、タップミー経由のQ&Aで自分の人柄を伝えられたのか、面接前から「いいな」と言ってもらえる企業に出会えました。",
-    avatar: "👩‍🦰",
+    avatar: voice03,
     rating: 5,
   },
 ];
@@ -194,6 +169,27 @@ function SectionLabel({ en, jp, light }) {
   );
 }
 
+// 写真を丸型クリップで表示するコンポーネント（背景黒を吸収）
+function CircleImage({ src, size = 200, alt = "" }) {
+  return (
+    <div style={{
+      width: size, height: size,
+      borderRadius: "50%",
+      overflow: "hidden",
+      border: `4px solid #fff`,
+      boxShadow: "0 8px 24px rgba(10,37,64,0.15)",
+      background: "#1a1a1a",
+      flexShrink: 0,
+    }}>
+      <img src={src} alt={alt} style={{
+        width: "100%", height: "100%",
+        objectFit: "cover",
+        objectPosition: "center top",
+      }} />
+    </div>
+  );
+}
+
 // ==========================================================================
 // MAIN
 // ==========================================================================
@@ -203,6 +199,7 @@ export default function TopLP() {
   const [openFaq, setOpenFaq] = useState(0);
 
   const handleRegister = () => navigate("/register");
+  const handleLogin = () => navigate("/login");
 
   return (
     <div style={{
@@ -238,7 +235,7 @@ export default function TopLP() {
               onClick={() => navigate("/")}
               style={{ height: 30, objectFit: "contain", cursor: "pointer" }}
             />
-            <button style={{
+            <button onClick={handleLogin} style={{
               padding: "6px 18px",
               background: "#fff", color: PRIMARY_DARK,
               border: `1.5px solid ${PRIMARY}`, borderRadius: 18,
@@ -250,12 +247,12 @@ export default function TopLP() {
           <div style={{ flex: 1, overflowY: "auto", background: "#fff" }}>
 
             {/* ===== HERO ===== */}
-           <div style={{
+            <div style={{
               padding: "28px 20px 36px",
-              background: `linear-gradient(180deg, ${PRIMARY_BG} 0%, #FFFFFF 100%)`,
+              background: `linear-gradient(180deg, ${HERO_BG} 0%, #FFFFFF 100%)`,
               textAlign: "left",
             }}>
-              {/* チップ（中央寄せのまま） */}
+              {/* チップ */}
               <div style={{ textAlign: "center", marginBottom: 22 }}>
                 <div style={{
                   display: "inline-block",
@@ -270,23 +267,23 @@ export default function TopLP() {
                 </div>
               </div>
 
-              {/* メインキャッチ（左寄せ・大きく） */}
+              {/* メインキャッチ */}
               <div style={{
                 fontSize: 28, fontWeight: 900,
                 lineHeight: 1.45, letterSpacing: -1,
                 marginBottom: 18,
               }}>
                 <div style={{
-                  color: PRIMARY,
+                  color: PRIMARY_DARK,
                   marginBottom: 4,
                   fontSize: 32,
                 }}>
                   履歴書なし。
                 </div>
-                <div style={{ color: NAVY, fontSize: 24 }}>
+                <div style={{ color: NAVY, fontSize: 22 }}>
                   <span style={{ color: PRIMARY_DARK }}>3問</span>のQ&Aと写真だけで、
                 </div>
-                <div style={{ color: NAVY, fontSize: 24 }}>
+                <div style={{ color: NAVY, fontSize: 22 }}>
                   企業から
                   <span style={{
                     background: `linear-gradient(transparent 60%, ${ACCENT_YELLOW} 60%)`,
@@ -295,7 +292,14 @@ export default function TopLP() {
                 </div>
               </div>
 
-             {/* 説明文（白い角丸ボックスで囲む） */}
+              {/* 男性写真（丸型クリップで黒背景吸収） */}
+              <div style={{
+                display: "flex", justifyContent: "center", marginBottom: 20,
+              }}>
+                <CircleImage src={heroWorker} size={200} alt="現場で働く人" />
+              </div>
+
+              {/* 説明文 */}
               <div style={{
                 background: "#fff",
                 borderRadius: 12,
@@ -315,7 +319,7 @@ export default function TopLP() {
                 </div>
               </div>
 
-              {/* CTA（赤） */}
+              {/* CTA */}
               <button onClick={handleRegister} style={{
                 width: "100%", height: 56,
                 background: CTA, color: "#fff",
@@ -375,7 +379,7 @@ export default function TopLP() {
                     lineHeight: 1,
                   }}>{f.n}</div>
 
-                  {/* POINTバッジ（水色背景・青字） */}
+                  {/* POINTバッジ */}
                   <div style={{
                     display: "inline-block",
                     fontSize: 9, fontWeight: 800,
@@ -386,12 +390,14 @@ export default function TopLP() {
                     marginBottom: 12,
                   }}>POINT {f.n}</div>
 
-                  {/* タイトル + アイコン (添付ではアイコンが先) */}
+                  {/* タイトル + Figmaイラスト */}
                   <div style={{
-                    display: "flex", alignItems: "center", gap: 10, marginBottom: 10,
+                    display: "flex", alignItems: "center", gap: 12, marginBottom: 10,
                   }}>
-                    <div style={{ flexShrink: 0 }}>
-                      <f.Icon />
+                    <div style={{ flexShrink: 0, width: 64, height: 56,
+                      display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <img src={f.img} alt={f.title}
+                        style={{ width: "100%", height: "100%", objectFit: "contain" }} />
                     </div>
                     <div style={{
                       flex: 1,
@@ -409,7 +415,7 @@ export default function TopLP() {
                     {f.desc}
                   </div>
 
-                  {/* チップ（水色枠の角丸タグ） */}
+                  {/* チップ */}
                   <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
                     {f.chips.map(c => (
                       <span key={c} style={{
@@ -443,12 +449,14 @@ export default function TopLP() {
                     display: "flex", alignItems: "center", gap: 10, marginBottom: 8,
                   }}>
                     <div style={{
-                      width: 36, height: 36, borderRadius: 18,
-                      background: `linear-gradient(135deg, ${PRIMARY} 0%, ${PRIMARY_DARK} 100%)`,
+                      width: 44, height: 44, borderRadius: 22,
+                      background: PRIMARY_BG,
                       display: "flex", alignItems: "center", justifyContent: "center",
-                      fontSize: 16, color: "#fff", flexShrink: 0,
+                      flexShrink: 0, padding: 4,
+                      border: `1.5px solid ${PRIMARY}33`,
                     }}>
-                      {v.avatar}
+                      <img src={v.avatar} alt={v.name}
+                        style={{ width: "100%", height: "100%", objectFit: "contain" }} />
                     </div>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ fontSize: 9, fontWeight: 700, color: TEXT_SUB, marginBottom: 2 }}>
@@ -481,17 +489,18 @@ export default function TopLP() {
             {/* ===== HOW IT WORKS ===== */}
             <div style={{
               padding: "40px 20px",
-              background: NAVY,
+              background: HOW_BG,
             }}>
-              <SectionLabel en="HOW IT WORKS" jp="ご利用の流れ" light />
+              <SectionLabel en="HOW IT WORKS" jp="ご利用の流れ" />
 
               {HOW_IT_WORKS.map((s, i) => (
                 <div key={s.n} style={{
-                  background: "rgba(255,255,255,0.06)",
-                  border: `1px solid rgba(255,255,255,0.1)`,
+                  background: "#fff",
+                  border: `1px solid ${BORDER}`,
                   borderRadius: 12, padding: "14px 16px",
                   marginBottom: 8,
                   display: "flex", alignItems: "center", gap: 12,
+                  boxShadow: "0 2px 8px rgba(10,37,64,0.04)",
                 }}>
                   <div style={{
                     width: 44, height: 44, borderRadius: 22,
@@ -512,12 +521,12 @@ export default function TopLP() {
                       display: "flex", alignItems: "center", gap: 6, marginBottom: 4,
                     }}>
                       <span style={{ fontSize: 14 }}>{s.icon}</span>
-                      <span style={{ fontSize: 13, fontWeight: 800, color: "#fff" }}>
+                      <span style={{ fontSize: 13, fontWeight: 800, color: NAVY }}>
                         {s.title}
                       </span>
                     </div>
                     <div style={{
-                      fontSize: 10, color: PRIMARY_LIGHT, lineHeight: 1.6, fontWeight: 500,
+                      fontSize: 10, color: TEXT_SUB, lineHeight: 1.6, fontWeight: 500,
                     }}>
                       {s.desc}
                     </div>
@@ -601,10 +610,10 @@ export default function TopLP() {
               })}
             </div>
 
-            {/* ===== JOIN US ===== */}
+            {/* ===== JOIN US（女性写真込み） ===== */}
             <div style={{
               padding: "40px 20px 32px",
-              background: `linear-gradient(180deg, #FFFFFF 0%, ${PRIMARY_BG} 100%)`,
+              background: `linear-gradient(180deg, #FFFFFF 0%, ${HERO_BG} 100%)`,
               textAlign: "center",
             }}>
               <div style={{
@@ -614,13 +623,20 @@ export default function TopLP() {
 
               <div style={{
                 fontSize: 22, fontWeight: 900, color: NAVY,
-                lineHeight: 1.4, marginBottom: 8,
+                lineHeight: 1.4, marginBottom: 16,
                 letterSpacing: -0.5,
               }}>
                 さあ、はじめよう。<br/>
                 <span style={{
                   background: `linear-gradient(transparent 60%, ${ACCENT_YELLOW} 60%)`,
                 }}>履歴書なしの仕事探し</span>
+              </div>
+
+              {/* 女性写真（丸型クリップ） */}
+              <div style={{
+                display: "flex", justifyContent: "center", marginBottom: 20,
+              }}>
+                <CircleImage src={bottomWoman} size={180} alt="タップミー利用者" />
               </div>
 
               <div style={{
@@ -652,7 +668,7 @@ export default function TopLP() {
               <div style={{
                 fontSize: 10, color: TEXT_SUB, marginTop: 8,
               }}>
-                既にアカウントをお持ちの方は <span style={{
+                既にアカウントをお持ちの方は <span onClick={handleLogin} style={{
                   color: PRIMARY_DARK, fontWeight: 700, textDecoration: "underline",
                   cursor: "pointer",
                 }}>ログイン</span>
