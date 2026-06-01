@@ -41,6 +41,21 @@ const BODY_TEXT = `「建設業って、本当に自分にできるのかな」�
 
 安定も、やりがいも、ライフワークバランスも。サンプル建設で、新しいキャリアを始めませんか？`;
 
+// ★ PRポイント：文字数を絞った短いキャッチに変更
+const PR_POINTS = [
+  "未経験OK・研修3ヶ月",
+  "全国展開・希望勤務地で",
+  "年休118日・残業少なめ",
+];
+
+// ★ どんな会社？：5段階評価（value=1〜5、1が左寄り・5が右寄り・3が中央）
+const COMPANY_CULTURE = [
+  { left: "てきぱき・要領よく", right: "じっくり・ゆっくり", value: 2 },
+  { left: "チームプレイ重視", right: "個人プレイ重視", value: 1 },
+  { left: "上下関係がはっきり", right: "上下関係なくオープン", value: 4 },
+  { left: "なごやか・やさしい", right: "競い合い・鍛えあう", value: 2 },
+];
+
 const VOICE_FROM_EMPLOYEE = {
   name: "Tさん",
   age: 28, gender: "男性",
@@ -173,6 +188,46 @@ function BulletList({ items }) {
   );
 }
 
+// ★ 5段階カルチャースケール（●で左寄り/右寄りを表現）
+function CultureScale({ left, right, value }) {
+  return (
+    <div style={{ marginBottom: 16 }}>
+      <div style={{
+        display: "flex", justifyContent: "space-between",
+        fontSize: 11, fontWeight: 800, color: TEXT_SUB, marginBottom: 7,
+      }}>
+        <span>{left}</span>
+        <span>{right}</span>
+      </div>
+      <div style={{
+        position: "relative",
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+        padding: "0 5px", height: 18,
+      }}>
+        {/* トラック線 */}
+        <div style={{
+          position: "absolute", left: 9, right: 9, top: "50%",
+          height: 2, background: BORDER, transform: "translateY(-50%)",
+        }} />
+        {[1, 2, 3, 4, 5].map((n) => {
+          const active = n === value;
+          return (
+            <div key={n} style={{
+              position: "relative", zIndex: 1,
+              width: active ? 18 : 9, height: active ? 18 : 9,
+              borderRadius: "50%",
+              background: active ? PRIMARY_DARK : "#fff",
+              border: active ? `2px solid ${PRIMARY_DARK}` : `2px solid ${BORDER}`,
+              boxShadow: active ? `0 2px 6px ${PRIMARY}77` : "none",
+              transition: "all 0.15s",
+            }} />
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 // ==========================================================================
 // MAIN
 // ==========================================================================
@@ -250,9 +305,46 @@ export default function ScoutDetail() {
               スカウトが届きました！！
             </div>
 
+            {/* ★ 💌 企業からのメッセージ（最上部・条件キャッチより上に配置） */}
+            <div style={{ padding: "16px 16px 8px" }}>
+              <div style={{
+                fontSize: 13, fontWeight: 800, color: CTA, marginBottom: 8,
+                display: "flex", alignItems: "center", gap: 6,
+              }}>
+                <span>💌</span>
+                <span>企業からのメッセージ</span>
+              </div>
+              <div style={{
+                background: "#FFF6F2",
+                border: `2px solid ${CTA}`,
+                borderRadius: 10, padding: "12px 14px",
+              }}>
+                <div style={{
+                  fontSize: 13, color: TEXT, lineHeight: 1.8,
+                  whiteSpace: "pre-wrap",
+                }}>
+                  {messageOpen ? fullMessage : previewMessage}
+                </div>
+                {fullMessage.length > MESSAGE_PREVIEW_LIMIT && (
+                  <div onClick={() => setMessageOpen(!messageOpen)} style={{
+                    marginTop: 8, fontSize: 12, fontWeight: 800,
+                    color: CTA, cursor: "pointer",
+                    display: "flex", alignItems: "center", gap: 4,
+                    paddingTop: 6, borderTop: `1px dashed ${CTA}55`,
+                  }}>
+                    <span>{messageOpen ? "閉じる" : "続きを読む"}</span>
+                    <span style={{
+                      transform: messageOpen ? "rotate(180deg)" : "rotate(0deg)",
+                      transition: "transform 0.2s",
+                    }}>▼</span>
+                  </div>
+                )}
+              </div>
+            </div>
+
             {/* 1. 条件キャッチ */}
             <div style={{
-              padding: "20px 16px 12px",
+              padding: "16px 16px 12px",
               background: SKY_BG,
             }}>
               <div style={{
@@ -347,10 +439,10 @@ export default function ScoutDetail() {
               </div>
             </div>
 
-            {/* 6. PRポイント */}
+            {/* 6. PRポイント（文字数を絞った短いキャッチ） */}
             <div style={{ padding: "16px 16px 24px", background: "#fff" }}>
               <SectionTitle icon="✨">この求人のPRポイント</SectionTitle>
-              {(scout.prPoints || []).map((point, i) => (
+              {PR_POINTS.map((point, i) => (
                 <div key={i} style={{
                   display: "flex", gap: 12,
                   marginBottom: 12, alignItems: "center",
@@ -366,7 +458,7 @@ export default function ScoutDetail() {
                     <div style={{ fontSize: 16, fontWeight: 900, lineHeight: 1 }}>{i + 1}</div>
                   </div>
                   <div style={{
-                    flex: 1, fontSize: 13, fontWeight: 700, color: TEXT,
+                    flex: 1, fontSize: 14, fontWeight: 800, color: TEXT,
                     lineHeight: 1.5,
                   }}>
                     {point}
@@ -375,7 +467,26 @@ export default function ScoutDetail() {
               ))}
             </div>
 
-            {/* 7. 入社した人の声 */}
+            {/* 7. ★ どんな会社？（5段階カルチャースケール） */}
+            <div style={{ padding: "16px 16px 24px", background: "#fff" }}>
+              <SectionTitle icon="🧭">どんな会社？</SectionTitle>
+              <div style={{
+                border: `1px solid ${BORDER}`, borderRadius: 12,
+                padding: "18px 16px 12px", background: SKY_BG,
+              }}>
+                {COMPANY_CULTURE.map((c, i) => (
+                  <CultureScale key={i} left={c.left} right={c.right} value={c.value} />
+                ))}
+                <div style={{
+                  fontSize: 10.5, color: TEXT_MUTE, textAlign: "center",
+                  marginTop: 2,
+                }}>
+                  ●の位置が企業のカルチャー傾向を示しています
+                </div>
+              </div>
+            </div>
+
+            {/* 8. 入社した人の声 */}
             <div style={{ padding: "16px 16px 24px", background: SKY_BG }}>
               <SectionTitle icon="🗣">入社した人の声</SectionTitle>
               <div style={{
@@ -409,43 +520,6 @@ export default function ScoutDetail() {
                 }}>
                   {VOICE_FROM_EMPLOYEE.comment}
                 </div>
-              </div>
-            </div>
-
-            {/* 8. 💌 企業からのメッセージ */}
-            <div style={{ padding: "20px 16px 8px" }}>
-              <div style={{
-                fontSize: 13, fontWeight: 800, color: CTA, marginBottom: 8,
-                display: "flex", alignItems: "center", gap: 6,
-              }}>
-                <span>💌</span>
-                <span>企業からのメッセージ</span>
-              </div>
-              <div style={{
-                background: "#FFF6F2",
-                border: `2px solid ${CTA}`,
-                borderRadius: 10, padding: "12px 14px",
-              }}>
-                <div style={{
-                  fontSize: 13, color: TEXT, lineHeight: 1.8,
-                  whiteSpace: "pre-wrap",
-                }}>
-                  {messageOpen ? fullMessage : previewMessage}
-                </div>
-                {fullMessage.length > MESSAGE_PREVIEW_LIMIT && (
-                  <div onClick={() => setMessageOpen(!messageOpen)} style={{
-                    marginTop: 8, fontSize: 12, fontWeight: 800,
-                    color: CTA, cursor: "pointer",
-                    display: "flex", alignItems: "center", gap: 4,
-                    paddingTop: 6, borderTop: `1px dashed ${CTA}55`,
-                  }}>
-                    <span>{messageOpen ? "閉じる" : "続きを読む"}</span>
-                    <span style={{
-                      transform: messageOpen ? "rotate(180deg)" : "rotate(0deg)",
-                      transition: "transform 0.2s",
-                    }}>▼</span>
-                  </div>
-                )}
               </div>
             </div>
 
