@@ -26,6 +26,9 @@ const CONDITION_CATCH = "施工管理スタッフ◆未経験OK／月給30万円
 
 const LOCATION_SALARY = { location: "日本全国", salary: "350万〜450万円" };
 
+// ★ 条件キャッチ下のタグ
+const CATCH_TAGS = ["未経験OK", "残業少なめ", "賞与年2回"];
+
 const CATCH_COPY = "「私にもできそう」と思える安心感。\nサンプル建設で、新しいキャリアを。";
 
 const BODY_TEXT = `「建設業って、本当に自分にできるのかな」そんな不安を抱える方も多いはず。サンプル建設では、未経験から成長できる充実の研修制度と、安定した働き方が両立できる環境を整えています。
@@ -188,6 +191,26 @@ function BulletList({ items }) {
   );
 }
 
+// ★ ラベル付き値（勤務地 / 年収 など）
+function LabelValue({ label, value }) {
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+      <span style={{
+        padding: "4px 10px",
+        background: "#fff",
+        color: PRIMARY_DARK,
+        fontSize: 12, fontWeight: 800,
+        borderRadius: 6,
+        border: `1px solid ${PRIMARY_LIGHT}`,
+        flexShrink: 0,
+      }}>{label}</span>
+      <span style={{
+        fontSize: 16, fontWeight: 900, color: TEXT, lineHeight: 1.3,
+      }}>{value}</span>
+    </div>
+  );
+}
+
 // ★ 5段階カルチャースケール（●で左寄り/右寄りを表現）
 function CultureScale({ left, right, value }) {
   return (
@@ -342,7 +365,7 @@ export default function ScoutDetail() {
               </div>
             </div>
 
-            {/* 1. 条件キャッチ */}
+            {/* 1. 条件キャッチ + タグ */}
             <div style={{
               padding: "16px 16px 12px",
               background: SKY_BG,
@@ -353,23 +376,35 @@ export default function ScoutDetail() {
               }}>
                 {CONDITION_CATCH}
               </div>
+              {/* ★ タグ */}
+              <div style={{
+                display: "flex", flexWrap: "wrap", gap: 8, marginTop: 12,
+              }}>
+                {CATCH_TAGS.map((t) => (
+                  <span key={t} style={{
+                    display: "inline-flex", alignItems: "center", gap: 2,
+                    padding: "5px 12px",
+                    background: "#fff",
+                    border: `1.5px solid ${PRIMARY_LIGHT}`,
+                    borderRadius: 999,
+                    fontSize: 12, fontWeight: 700, color: PRIMARY_DARK,
+                  }}>
+                    <span style={{ color: PRIMARY, fontWeight: 800 }}>#</span>{t}
+                  </span>
+                ))}
+              </div>
             </div>
 
-            {/* 2. 勤務地 ｜ 収入 */}
+            {/* 2. 勤務地 / 年収（ラベル付き） */}
             <div style={{
               padding: "12px 16px 16px",
               background: SKY_BG,
               borderBottom: `1px solid ${BORDER}`,
+              display: "flex", flexWrap: "wrap", alignItems: "center",
+              gap: "10px 18px",
             }}>
-              <div style={{
-                display: "flex", alignItems: "center", gap: 12,
-                fontSize: 16, fontWeight: 900, color: PRIMARY_DARK,
-                lineHeight: 1.4,
-              }}>
-                <span>{LOCATION_SALARY.location}</span>
-                <span style={{ color: TEXT_MUTE, fontSize: 18, fontWeight: 400 }}>｜</span>
-                <span>{LOCATION_SALARY.salary}</span>
-              </div>
+              <LabelValue label="勤務地" value={LOCATION_SALARY.location} />
+              <LabelValue label="年収" value={LOCATION_SALARY.salary} />
             </div>
 
             {/* 3. キャッチコピー */}
