@@ -5,86 +5,85 @@ import { SCOUTS } from "../scoutData";
 
 const PRIMARY = "#3FB6E8";
 const PRIMARY_DARK = "#059CDB";
+const PRIMARY_LIGHT = "#A9E0F0";
+const SKY_BG = "#E8F3F8";
 const ACCENT_YELLOW = "#F7CF29";
 const CTA = "#E8593C";
-const CTA_DARK = "#C44529";
-const SUCCESS = "#22C39A";
 const NAVY = "#0A2540";
 const BG = "#F4FAFE";
 const BORDER = "#DDE9F0";
-const TEXT = "#0A2540";
+const TEXT = "#1a1a1a";
 const TEXT_SUB = "#5A6B7C";
 const TEXT_MUTE = "#A0AEC0";
 
-const MESSAGE_PREVIEW_LIMIT = 50;
+const MESSAGE_PREVIEW_LIMIT = 80;
 
-const JOB_OVERVIEW = `MOTAは「世界中にもっとフェアトレードを」をミッションに、人生の選択をより公正で公平な機会に変革するプロダクトを提供しております。
+// ==========================================================================
+// 求人サンプルデータ（scout_001：サンプル建設・施工管理スタッフ をベース）
+// ==========================================================================
 
-現在、業界最大規模の車買取サービスMOTA車買取に加え、不動産サービスの提供を24年12月にローンチ、今後は人材サービス検討も行っていく予定です。
+const CONDITION_CATCH = "施工管理スタッフ◆未経験OK／月給30万円〜／全国展開／賞与年2回／退職金あり";
 
-直近3年の売上成長がCAGR205%を超え、事業は急拡大フェーズとなっており、2030年に1000億円規模を作るべく、この第2創業期に中心となって働くメンバーを全領域で募集しています。
+const LOCATION_SALARY = { location: "日本全国", salary: "350万〜450万円" };
 
-本ポジションでは、GM候補として自社プラットフォームの戦略策定と推進を担い、事業の中核を担う役割をお任せします。MOTAは自動車流通のDXを目指しており、プロダクト戦略、UI/UX改善、機能開発（カスタマー・クライアント問わず）を統括し、事業成長に直結するプロダクト責任者として活躍いただきます。`;
+const CATCH_COPY = "「私にもできそう」と思える安心感。\nサンプル建設で、新しいキャリアを。";
+
+const BODY_TEXT = `「建設業って、本当に自分にできるのかな」そんな不安を抱える方も多いはず。サンプル建設では、未経験から成長できる充実の研修制度と、安定した働き方が両立できる環境を整えています。
+
+◇未経験OK・充実の研修制度
+入社後3ヶ月の集中研修で、基礎知識と現場対応力を身につけられます。先輩社員がマンツーマンでサポートしてくれるので、未経験でも安心してスタートできます。
+
+◇全国展開だから希望勤務地で働ける
+全国に拠点があるため、希望のエリアで働けます。Uターン・Iターン希望の方にもオススメです。引越し補助制度もあり、住む場所の悩みを解消します。
+
+◇残業少なめでプライベートも充実
+月の平均残業時間は20時間以内。年間休日118日、土日祝日休みで、プライベートもしっかり確保できます。家族との時間も大切にできる職場です。
+
+安定も、やりがいも、ライフワークバランスも。サンプル建設で、新しいキャリアを始めませんか？`;
+
+const VOICE_FROM_EMPLOYEE = {
+  name: "Tさん",
+  age: 28, gender: "男性",
+  role: "施工管理",
+  tenure: "入社2年目",
+  comment: "前職は飲食業でしたが、未経験から入社して2年で現場を任せてもらえるようになりました。先輩方が丁寧に教えてくださるので、安心して成長できる環境です。",
+};
+
+const JOB_OVERVIEW = `サンプル建設は「建設業のDXを通じて、より働きやすい現場をつくる」をミッションに掲げ、住宅・商業施設・公共インフラまで幅広い領域で施工管理サービスを提供しています。
+
+現在、全国47都道府県に拠点を持ち、未経験から成長できる教育プログラムと、業界平均を上回る休日数・福利厚生で「働きやすさ」を追求しています。
+
+本ポジションでは、現場での施工管理を担当いただきます。経験者の方には、より大規模なプロジェクトのマネジメントもお任せします。`;
 
 const JOB_TASKS = [
-  "当社の集客基盤（月間700万人）を活用した新規ビジネスモデル構築、サービスの企画開発、機能ローンチとそれに伴う販売戦略立案等",
-  "事業戦略とプロダクト戦略の両方を描き、売上・利益の最大化を推進",
-  "市場・社内・顧客ニーズの分析、およびサービス拡充戦略の立案・協業パートナーとの交渉",
-  "企画・カスタマーサポートを含む組織マネジメント",
-  "事業部・社内・関連会社との会議運営",
-  "システム/デザインチーム・マーケティングチームと連携したWebサービス開発",
-  "プロジェクトマネジメント",
-];
-
-const PROJECT_EXAMPLES = [
-  "ビジネスモデルプランの仕様変更",
-  "基幹業務システムのフルリニューアル",
-  "複数サービス横断に関わる新規プロダクト開発",
-  "（toC/B含む）クライアントマイページの改修",
-];
-
-const REQUIRED_SKILLS = [
-  "5名以上のチームマネジメント経験（5年以上）",
-  "加えて以下いずれかのご経験をお持ちの方",
-  "・インターネットサービスまたはアプリの企画・開発経験（3年以上）",
-  "・SIerまたはコンサルティングファームでの業務経験",
-  "・プロダクト戦略の策定・推進経験（要件定義・ディレクション・プロジェクト推進を含む）",
-];
-
-const WELCOME_SKILLS = [
-  "事業に対する当事者意識",
-  "プロダクトを通した事業目標の達成貢献（見立てる力、仕立てる力、動かす力）",
-  "市場、市況の変化に敏感となり実行できる方",
-  "モビリティ業界のプロジェクト参画経験",
-  "事業会社でのサービス企画経験",
-  "マーケティング・プロモーション実務経験",
-  "ディレクターやPdMに類する職種の実務経験",
-  "UI/UX設計経験",
-];
-
-const PERSON_PROFILE = [
-  "個人、チームの組織成長に前向きに取り組める方",
-  "数字とビジネスと人をバランスよく見られる方",
-  "ビジネス側と開発側の要件を理解し最適な案を妥協せず実現させていく方",
+  "建設現場での工程管理・品質管理・安全管理",
+  "現場作業員とのコミュニケーション・指示出し",
+  "図面確認・設計者や発注者との打ち合わせ",
+  "施工計画の立案・スケジュール管理",
+  "資材発注・在庫管理",
+  "完了検査・引き渡し業務",
 ];
 
 const APPLICATION_INFO = [
-  { label: "給与", value: "年収 9,054,467円〜15,013,773円（経験、スキル、職務に応じて決定）\n月額固定給与 644,905円〜1,069,357円\n内訳：基本給523,682円〜868,350円 + 固定残業代（30時間/月）121,223円〜201,007円\n・賞与：年2回（2月・8月）\n・昇給：年2回（2月・8月）" },
-  { label: "勤務地", value: "MOTA本社 東京都港区赤坂2丁目4-6 赤坂グリーンクロス22F" },
+  { label: "給与", value: "年収 350万〜450万円（経験、スキル、職務に応じて決定）\n月給 300,000円〜375,000円\n・賞与：年2回（夏・冬）\n・昇給：年1回（4月）" },
   { label: "雇用形態", value: "正社員" },
-  { label: "勤務体系", value: "勤務時間 10:00〜19:00\nフレックスタイム制度あり（コアタイム11:00-16:00）\n休日・休暇：年間122日（2024年実績）、完全週休2日制（土・日・祝日）、年末年始、有給休暇、アニバーサリー休暇、リフレッシュ休暇 等" },
+  { label: "勤務体系", value: "勤務時間 8:00〜17:00（実働8時間）\n休日・休暇：年間118日、完全週休2日制（土・日・祝）、年末年始、GW、夏季休暇、有給休暇 等" },
   { label: "試用期間", value: "あり（3ヶ月）" },
-  { label: "福利厚生", value: "社会保険完備、定期健康診断、交通費支給（最大4万円/月）、PC支給（Mac/Windows選択可）、リモートワーク制度、フリードリンク、表彰制度、オンライン研修ツール、育児時短制度 等" },
+  { label: "福利厚生", value: "社会保険完備、定期健康診断、交通費全額支給、退職金制度、家族手当、住宅手当、引越し補助、資格取得支援、研修制度 等" },
 ];
 
 const COMPANY_INFO = [
-  { label: "企業名", value: "株式会社MOTA" },
-  { label: "設立年月", value: "1999年06月" },
+  { label: "企業名", value: "サンプル建設株式会社" },
+  { label: "設立年月", value: "1985年04月" },
   { label: "本社所在地", value: "東京都港区赤坂2丁目4番6号 赤坂グリーンクロス22階" },
-  { label: "事業内容", value: "自動車DX事業 / 不動産DX事業" },
-  { label: "資本金", value: "141百万円（2026年3月時点）" },
-  { label: "従業員数", value: "160名" },
+  { label: "事業内容", value: "建設業（住宅・商業施設・公共インフラ）/ 施工管理サービス" },
+  { label: "資本金", value: "5億円" },
+  { label: "従業員数", value: "1,200名" },
 ];
+
+// ==========================================================================
+// Components
+// ==========================================================================
 
 function Phone({ children }) {
   return (
@@ -113,85 +112,17 @@ function Phone({ children }) {
   );
 }
 
-function PhotoTile({ emoji, idx }) {
-  const colors = ["#E0F2F8", "#FEF3D6", "#E8F4D9", "#FDE6F0", "#F0E8FA", "#FFE4DC"];
-  return (
-    <div style={{
-      width: 160, height: 110, borderRadius: 10,
-      background: colors[idx % colors.length],
-      flexShrink: 0,
-      display: "flex", alignItems: "center", justifyContent: "center",
-      fontSize: 60,
-      boxShadow: "0 2px 8px rgba(10,37,64,0.06)",
-      border: `1px solid ${BORDER}`,
-    }}>
-      {emoji}
-    </div>
-  );
-}
-
-function PerkRow({ label, value, sub, highlight }) {
-  return (
-    <div style={{
-      display: "flex", padding: "10px 0",
-      borderBottom: `1px solid ${BORDER}`,
-      gap: 10, alignItems: "flex-start",
-    }}>
-      <div style={{
-        width: 56, fontSize: 11, fontWeight: 800,
-        color: "#fff", background: highlight ? CTA : PRIMARY_DARK,
-        padding: "4px 0", borderRadius: 4, textAlign: "center",
-        flexShrink: 0,
-      }}>
-        {label}
-      </div>
-      <div style={{ flex: 1 }}>
-        <div style={{
-          fontSize: 14, fontWeight: 800,
-          color: TEXT, lineHeight: 1.4, whiteSpace: "pre-wrap",
-        }}>
-          {value}
-        </div>
-        {sub && (
-          <div style={{
-            fontSize: 11, color: TEXT_SUB, marginTop: 2,
-            fontWeight: 600, lineHeight: 1.5, whiteSpace: "pre-wrap",
-          }}>
-            {sub}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
 function SectionTitle({ icon, children }) {
   return (
     <div style={{
-      fontSize: 14, fontWeight: 800, color: NAVY,
-      marginBottom: 10, marginTop: 4,
+      fontSize: 15, fontWeight: 800, color: TEXT,
+      marginBottom: 12,
       display: "flex", alignItems: "center", gap: 6,
-      paddingBottom: 6, borderBottom: `2px solid ${PRIMARY}`,
+      paddingBottom: 8, borderBottom: `2px solid ${PRIMARY}`,
     }}>
       <span style={{ fontSize: 16 }}>{icon}</span>
       <span>{children}</span>
     </div>
-  );
-}
-
-function BulletList({ items, prefix = "・" }) {
-  return (
-    <ul style={{
-      listStyle: "none", padding: 0, margin: 0,
-      fontSize: 12, color: TEXT, lineHeight: 1.8,
-    }}>
-      {items.map((it, i) => (
-        <li key={i} style={{ paddingLeft: 0, marginBottom: 4, display: "flex", gap: 6 }}>
-          <span style={{ color: PRIMARY_DARK, flexShrink: 0 }}>{prefix}</span>
-          <span style={{ flex: 1 }}>{it}</span>
-        </li>
-      ))}
-    </ul>
   );
 }
 
@@ -207,7 +138,7 @@ function InfoTable({ rows }) {
         }}>
           <div style={{
             width: 80, padding: "10px 8px",
-            background: "#F4FAFE",
+            background: SKY_BG,
             fontSize: 11, fontWeight: 800, color: TEXT_SUB,
             flexShrink: 0,
           }}>
@@ -226,13 +157,33 @@ function InfoTable({ rows }) {
   );
 }
 
+function BulletList({ items }) {
+  return (
+    <ul style={{
+      listStyle: "none", padding: 0, margin: 0,
+      fontSize: 12.5, color: TEXT, lineHeight: 1.8,
+    }}>
+      {items.map((it, i) => (
+        <li key={i} style={{ marginBottom: 6, display: "flex", gap: 6 }}>
+          <span style={{ color: PRIMARY_DARK, flexShrink: 0 }}>・</span>
+          <span style={{ flex: 1 }}>{it}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+// ==========================================================================
+// MAIN
+// ==========================================================================
+
 export default function ScoutDetail() {
   const navigate = useNavigate();
   const { id } = useParams();
   const scout = SCOUTS.find(s => s.id === id) || SCOUTS[0];
 
   const [messageOpen, setMessageOpen] = useState(false);
-  const [hasUnread, setHasUnread] = useState(true);
+  const [mainPhotoIdx, setMainPhotoIdx] = useState(0);
 
   const fullMessage = `${scout.jobTitle}担当の山田と申します。${scout.message}
 
@@ -243,6 +194,10 @@ export default function ScoutDetail() {
   const previewMessage = fullMessage.length > MESSAGE_PREVIEW_LIMIT
     ? fullMessage.slice(0, MESSAGE_PREVIEW_LIMIT) + "..."
     : fullMessage;
+
+  // 写真パレット（メイン+サムネ用、emoji & 背景色）
+  const photoColors = ["#E0F2F8", "#FEF3D6", "#E8F4D9", "#FDE6F0", "#F0E8FA", "#FFE4DC"];
+  const photos = scout.photos || ["🏗", "🏢", "👷‍♂️", "📐", "🚧", "🔧"];
 
   return (
     <div style={{
@@ -266,6 +221,7 @@ export default function ScoutDetail() {
         </div>
 
         <Phone>
+          {/* ヘッダー */}
           <div style={{
             height: 56, background: "#fff", borderBottom: `1px solid ${BORDER}`,
             display: "flex", alignItems: "center", justifyContent: "space-between",
@@ -284,88 +240,182 @@ export default function ScoutDetail() {
           </div>
 
           <div style={{ flex: 1, overflowY: "auto", background: "#fff" }}>
-            {hasUnread && (
-              <div style={{
-                background: CTA, color: "#fff",
-                padding: "12px 16px", textAlign: "center",
-                fontSize: 14, fontWeight: 800, letterSpacing: 0.5,
-              }}>
-                <span style={{ marginRight: 6 }}>📩</span>
-                スカウトが届きました！！
-              </div>
-            )}
-
+            {/* スカウト通知バナー */}
             <div style={{
-              padding: "16px 16px 12px",
-              borderBottom: `1px solid ${BORDER}`,
-              background: "#fff",
+              background: CTA, color: "#fff",
+              padding: "12px 16px", textAlign: "center",
+              fontSize: 14, fontWeight: 800, letterSpacing: 0.5,
             }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10 }}>
-                <div style={{
-                  width: 60, height: 60, borderRadius: 10,
-                  background: scout.iconBg,
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  fontSize: 12, fontWeight: 700, color: scout.iconColor,
-                  flexShrink: 0,
-                  border: `2px solid ${BORDER}`,
+              <span style={{ marginRight: 6 }}>📩</span>
+              スカウトが届きました！！
+            </div>
+
+            {/* 1. 条件キャッチ */}
+            <div style={{
+              padding: "20px 16px 12px",
+              background: SKY_BG,
+            }}>
+              <div style={{
+                fontSize: 14, fontWeight: 800, color: TEXT,
+                lineHeight: 1.6, letterSpacing: 0,
+              }}>
+                {CONDITION_CATCH}
+              </div>
+            </div>
+
+            {/* 2. 勤務地 ｜ 収入 */}
+            <div style={{
+              padding: "12px 16px 16px",
+              background: SKY_BG,
+              borderBottom: `1px solid ${BORDER}`,
+            }}>
+              <div style={{
+                display: "flex", alignItems: "center", gap: 12,
+                fontSize: 16, fontWeight: 900, color: PRIMARY_DARK,
+                lineHeight: 1.4,
+              }}>
+                <span>{LOCATION_SALARY.location}</span>
+                <span style={{ color: TEXT_MUTE, fontSize: 18, fontWeight: 400 }}>｜</span>
+                <span>{LOCATION_SALARY.salary}</span>
+              </div>
+            </div>
+
+            {/* 3. キャッチコピー */}
+            <div style={{ padding: "24px 16px 16px" }}>
+              <div style={{
+                fontSize: 20, fontWeight: 900, color: TEXT,
+                lineHeight: 1.5, letterSpacing: -0.5,
+                whiteSpace: "pre-wrap",
+              }}>
+                {CATCH_COPY}
+              </div>
+            </div>
+
+            {/* 4. 本文 */}
+            <div style={{ padding: "8px 16px 24px" }}>
+              <div style={{
+                fontSize: 13, color: TEXT, lineHeight: 1.9,
+                whiteSpace: "pre-wrap", fontWeight: 500,
+              }}>
+                {BODY_TEXT.split("\n\n").map((paragraph, idx) => {
+                  const isHeading = paragraph.startsWith("◇");
+                  return (
+                    <div key={idx} style={{
+                      marginBottom: 14,
+                      ...(isHeading ? { fontWeight: 800, color: PRIMARY_DARK, fontSize: 14 } : {}),
+                    }}>
+                      {paragraph}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* 5. 写真：メイン + サムネ6枚 */}
+            <div style={{ padding: "8px 16px 24px" }}>
+              {/* メイン写真 */}
+              <div style={{
+                width: "100%", height: 220,
+                borderRadius: 12,
+                background: photoColors[mainPhotoIdx % photoColors.length],
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: 120,
+                marginBottom: 10,
+                border: `1px solid ${BORDER}`,
+                boxShadow: "0 4px 12px rgba(10,37,64,0.08)",
+              }}>
+                {photos[mainPhotoIdx]}
+              </div>
+              {/* サムネ6枚 */}
+              <div style={{
+                display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: 6,
+              }}>
+                {photos.slice(0, 6).map((emoji, i) => (
+                  <div key={i} onClick={() => setMainPhotoIdx(i)} style={{
+                    aspectRatio: "1 / 1",
+                    borderRadius: 6,
+                    background: photoColors[i % photoColors.length],
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontSize: 24,
+                    cursor: "pointer",
+                    border: i === mainPhotoIdx ? `2.5px solid ${PRIMARY_DARK}` : `1px solid ${BORDER}`,
+                    transition: "all 0.15s",
+                  }}>
+                    {emoji}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* 6. PRポイント */}
+            <div style={{ padding: "16px 16px 24px", background: "#fff" }}>
+              <SectionTitle icon="✨">この求人のPRポイント</SectionTitle>
+              {(scout.prPoints || []).map((point, i) => (
+                <div key={i} style={{
+                  display: "flex", gap: 12,
+                  marginBottom: 12, alignItems: "center",
                 }}>
-                  ロゴ
-                </div>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: 10, fontWeight: 700, color: TEXT_SUB, marginBottom: 2 }}>
-                    {scout.industry}
+                  <div style={{
+                    width: 44, height: 44, borderRadius: 6,
+                    background: PRIMARY, color: "#fff",
+                    display: "flex", flexDirection: "column",
+                    alignItems: "center", justifyContent: "center",
+                    flexShrink: 0,
+                  }}>
+                    <div style={{ fontSize: 8, fontWeight: 800, letterSpacing: 1 }}>POINT</div>
+                    <div style={{ fontSize: 16, fontWeight: 900, lineHeight: 1 }}>{i + 1}</div>
                   </div>
                   <div style={{
-                    fontSize: 14, fontWeight: 800, color: NAVY,
-                    lineHeight: 1.4, marginBottom: 4,
+                    flex: 1, fontSize: 13, fontWeight: 700, color: TEXT,
+                    lineHeight: 1.5,
                   }}>
-                    {scout.jobTitle}
-                  </div>
-                  <div style={{
-                    fontSize: 11, color: PRIMARY_DARK, fontWeight: 700,
-                    textDecoration: "underline",
-                    textDecorationColor: PRIMARY_DARK + "44",
-                  }}>
-                    {scout.company} ・ {scout.location}
+                    {point}
                   </div>
                 </div>
-              </div>
+              ))}
+            </div>
 
-              <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-                {scout.tags.map(tag => (
-                  <span key={tag} style={{
-                    fontSize: 10, fontWeight: 700,
-                    padding: "3px 9px", borderRadius: 12,
-                    background: "#E8F6FD", color: PRIMARY_DARK,
-                    border: `1px solid ${PRIMARY}33`,
+            {/* 7. 入社した人の声 */}
+            <div style={{ padding: "16px 16px 24px", background: SKY_BG }}>
+              <SectionTitle icon="🗣">入社した人の声</SectionTitle>
+              <div style={{
+                background: "#fff",
+                borderRadius: 12, padding: "16px 14px",
+                border: `1px solid ${BORDER}`,
+              }}>
+                <div style={{
+                  display: "flex", alignItems: "center", gap: 12, marginBottom: 12,
+                }}>
+                  <div style={{
+                    width: 48, height: 48, borderRadius: 24,
+                    background: PRIMARY_LIGHT,
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontSize: 22,
+                    flexShrink: 0,
                   }}>
-                    # {tag}
-                  </span>
-                ))}
+                    👨
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontSize: 13, fontWeight: 800, color: TEXT, marginBottom: 2 }}>
+                      {VOICE_FROM_EMPLOYEE.name}（{VOICE_FROM_EMPLOYEE.age}歳・{VOICE_FROM_EMPLOYEE.gender}）
+                    </div>
+                    <div style={{ fontSize: 11, color: TEXT_SUB, fontWeight: 600 }}>
+                      {VOICE_FROM_EMPLOYEE.role}・{VOICE_FROM_EMPLOYEE.tenure}
+                    </div>
+                  </div>
+                </div>
+                <div style={{
+                  fontSize: 12.5, color: TEXT, lineHeight: 1.8,
+                }}>
+                  {VOICE_FROM_EMPLOYEE.comment}
+                </div>
               </div>
             </div>
 
-            <div style={{ padding: "14px 0", borderBottom: `1px solid ${BORDER}` }}>
+            {/* 8. 💌 企業からのメッセージ */}
+            <div style={{ padding: "20px 16px 8px" }}>
               <div style={{
-                fontSize: 11, fontWeight: 700, color: TEXT_SUB,
-                padding: "0 16px", marginBottom: 8,
-              }}>
-                職場の様子
-              </div>
-              <div style={{
-                display: "flex", gap: 8, overflowX: "auto",
-                padding: "0 16px",
-                scrollbarWidth: "thin",
-              }}>
-                {scout.photos.map((emoji, i) => (
-                  <PhotoTile key={i} emoji={emoji} idx={i} />
-                ))}
-              </div>
-            </div>
-
-            <div style={{ padding: "16px 16px 0" }}>
-              <div style={{
-                fontSize: 12, fontWeight: 800, color: CTA, marginBottom: 6,
+                fontSize: 13, fontWeight: 800, color: CTA, marginBottom: 8,
                 display: "flex", alignItems: "center", gap: 6,
               }}>
                 <span>💌</span>
@@ -399,79 +449,68 @@ export default function ScoutDetail() {
               </div>
             </div>
 
-            <div style={{ padding: "20px 16px 16px" }}>
+            {/* 9. 求人情報の詳細 */}
+            <div style={{ padding: "24px 16px 8px" }}>
               <div style={{
-                fontSize: 12, fontWeight: 800, color: NAVY, marginBottom: 8,
+                fontSize: 16, fontWeight: 900, color: TEXT,
+                marginBottom: 16,
+                paddingBottom: 8,
+                borderBottom: `3px solid ${PRIMARY}`,
                 display: "flex", alignItems: "center", gap: 6,
               }}>
                 <span>📋</span>
                 <span>求人情報の詳細</span>
               </div>
-              <PerkRow
-                label="年収"
-                value={scout.perks.annualIncome}
-                sub={scout.perks.monthly}
-                highlight
-              />
-              <PerkRow
-                label="休日"
-                value={scout.perks.holidays}
-                sub={scout.perks.schedule}
-              />
-              <PerkRow
-                label="そのほか"
-                value={scout.perks.others}
-              />
-            </div>
 
-            <div style={{ padding: "8px 16px 16px" }}>
-              <SectionTitle icon="💼">仕事概要</SectionTitle>
-              <div style={{
-                fontSize: 12, color: TEXT, lineHeight: 1.8,
-                whiteSpace: "pre-wrap",
-              }}>
-                {JOB_OVERVIEW}
+              {/* 9-1 仕事概要 */}
+              <div style={{ marginBottom: 24 }}>
+                <SectionTitle icon="💼">仕事概要</SectionTitle>
+                <div style={{
+                  fontSize: 12.5, color: TEXT, lineHeight: 1.9,
+                  whiteSpace: "pre-wrap", fontWeight: 500,
+                }}>
+                  {JOB_OVERVIEW}
+                </div>
+              </div>
+
+              {/* 9-2 業務内容 */}
+              <div style={{ marginBottom: 24 }}>
+                <SectionTitle icon="📌">業務内容</SectionTitle>
+                <BulletList items={JOB_TASKS} />
+              </div>
+
+              {/* 9-3 応募概要（地図なし） */}
+              <div style={{ marginBottom: 24 }}>
+                <SectionTitle icon="📝">応募概要</SectionTitle>
+                <InfoTable rows={APPLICATION_INFO} />
+              </div>
+
+              {/* 9-4 勤務地（地図なし・住所のみ） */}
+              <div style={{ marginBottom: 24 }}>
+                <SectionTitle icon="📍">勤務地</SectionTitle>
+                <div style={{
+                  fontSize: 13, color: TEXT, lineHeight: 1.7, fontWeight: 600,
+                  padding: "12px 14px",
+                  background: SKY_BG,
+                  borderRadius: 8,
+                  border: `1px solid ${BORDER}`,
+                }}>
+                  本社：東京都港区赤坂2丁目4-6 赤坂グリーンクロス22F<br/>
+                  ※全国の現場へ配属（希望勤務地相談可）
+                </div>
               </div>
             </div>
 
-            <div style={{ padding: "8px 16px 16px" }}>
-              <SectionTitle icon="📌">業務内容</SectionTitle>
-              <BulletList items={JOB_TASKS} />
-            </div>
-
-            <div style={{ padding: "8px 16px 16px" }}>
-              <SectionTitle icon="🚀">プロダクト企画・開発事例</SectionTitle>
-              <BulletList items={PROJECT_EXAMPLES} />
-            </div>
-
-            <div style={{ padding: "8px 16px 16px" }}>
-              <SectionTitle icon="✅">必須スキル</SectionTitle>
-              <BulletList items={REQUIRED_SKILLS} prefix="" />
-            </div>
-
-            <div style={{ padding: "8px 16px 16px" }}>
-              <SectionTitle icon="⭐">歓迎スキル</SectionTitle>
-              <BulletList items={WELCOME_SKILLS} />
-            </div>
-
-            <div style={{ padding: "8px 16px 16px" }}>
-              <SectionTitle icon="👥">求める人物像</SectionTitle>
-              <BulletList items={PERSON_PROFILE} />
-            </div>
-
-            <div style={{ padding: "8px 16px 16px" }}>
-              <SectionTitle icon="📝">応募概要</SectionTitle>
-              <InfoTable rows={APPLICATION_INFO} />
-            </div>
-
+            {/* 10. 会社情報（最下部） */}
             <div style={{ padding: "8px 16px 24px" }}>
-              <SectionTitle icon="🏢">企業情報</SectionTitle>
+              <SectionTitle icon="🏢">会社情報</SectionTitle>
               <InfoTable rows={COMPANY_INFO} />
             </div>
 
             <div style={{ height: 80 }} />
           </div>
 
+          {/* 下部固定ボタン */}
           <div style={{
             padding: "10px 12px",
             background: "#fff",
